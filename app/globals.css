@@ -1,0 +1,478 @@
+/*
+ * Global styles + Tailwind v4 design tokens — "Blue Hour" identity.
+ *
+ * DARK-LED on purpose: the dominant surface is rich black (#000919) and the
+ * accent is electric Celtic blue (#0A6ED3). This is the deliberate inverse of
+ * the light/white + mid-navy look it replaces — there must be NO visual
+ * resemblance to the original Accurate Giant site.
+ *
+ * Palette (owner-supplied): Celtic #0A6ED3 · Polynesian #054E98 · Yale #04356A
+ * · Oxford #001D3F · Rich Black #000919.
+ *
+ * Type: Outfit (display + body, the whole site) · Montserrat (eyebrows,
+ * ticker, tabular numerals).
+ *
+ * SINGLE SOURCE OF TRUTH: docs/brand-tokens.md. Components reference tokens
+ * (bg-brand-paper, text-brand-ink, …) — never hardcode hex.
+ */
+@import "tailwindcss";
+
+@theme {
+  /* ── Electric accent — the one bright in the dark field ──────────── */
+  --color-brand-primary: #0a6ed3;       /* Celtic — links, CTAs, accents     */
+  --color-brand-primary-deep: #054e98;  /* Polynesian — hover/pressed        */
+  --color-brand-primary-soft: #0a2547;  /* deep accent tint surface          */
+  --color-brand-secondary: #054e98;     /* alias (backwards-compat)          */
+
+  /* Signal — a brighter electric for live / drawn / glow moments. */
+  --color-brand-signal: #3b9bff;        /* bright sky-electric                */
+  --color-brand-signal-deep: #0a6ed3;   /* celtic                            */
+  --color-brand-signal-soft: #0a2547;   /* deep tint                         */
+
+  /* ── Dark surface ladder (darkest base → lighter raised) ─────────── */
+  --color-brand-paper: #07294f;         /* raised cards + default panels     */
+  --color-brand-paper-warm: #04356a;    /* Yale — feature/elevated bands     */
+  --color-brand-paper-muted: #00142e;   /* near-black sections, tables       */
+  --color-brand-paper-sunken: #00060f;  /* deepest inset                     */
+
+  /* ── Ink — cool whites + blue-grey ──────────────────────────────── */
+  --color-brand-ink: #e9f1fb;           /* primary text on dark              */
+  --color-brand-ink-muted: #93a7c4;     /* secondary text / metadata         */
+
+  /* ── Borders — blue-tinted hairlines visible on dark ────────────── */
+  --color-brand-border: #14365f;
+  --color-brand-border-strong: #235c9c;
+
+  /* ── State — tuned for dark ─────────────────────────────────────── */
+  --color-brand-success: #2bb673;
+  --color-brand-warning: #e6b450;
+  --color-brand-danger: #ef5a52;
+
+  /* ── Secondary accents — used sparingly (accents + abstract art) to
+   *    break the all-blue field. Electric blue stays the lead; gold reads
+   *    "prize/jackpot", violet + teal + coral enrich the abstract auroras. */
+  --color-brand-gold: #f6b73c;
+  --color-brand-gold-deep: #d4901f;
+  --color-brand-violet: #8b6dff;
+  --color-brand-teal: #1fc9a8;
+  --color-brand-coral: #ff7a59;
+
+  /* ── Type ───────────────────────────────────────────────────────── */
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  /* "mono" slot is now Montserrat — the geometric label face for eyebrows,
+   * the results ticker, and tabular numerals (via `tnum`). Not monospaced;
+   * the name is kept so the `font-mono` utility keeps routing here. */
+  --font-mono: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  /* font-serif aliased to Outfit so any lingering `font-serif` utility
+   * resolves to Outfit, not Times. */
+  --font-serif: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+
+  /* ── Type scale — modular 1.333 (perfect fourth) ────────────────── */
+  --text-2xs: 0.633rem;
+  --text-xs: 0.750rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.333rem;
+  --text-2xl: 1.777rem;
+  --text-3xl: 2.369rem;
+  --text-4xl: 3.157rem;
+  --text-5xl: 4.209rem;
+  --text-6xl: 5.61rem;
+  --text-7xl: 7.478rem;
+  --text-8xl: 9.969rem;
+
+  /* ── Radius — TIGHTER than AG's soft rounding (a sharper, more
+   *    technical "terminal" feel; visible structural divergence). ──── */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.625rem;
+  --radius-2xl: 0.875rem;
+
+  /* ── Motion ─────────────────────────────────────────────────────── */
+  --duration-instant: 0.15s;
+  --duration-quick: 0.3s;
+  --duration-normal: 0.5s;
+  --duration-slow: 0.8s;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasised: cubic-bezier(0.3, 0, 0, 1);
+  --ease-gentle: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    /* Rich Black base — only shows where a section has no surface of its
+     * own. The token ladder above sits on top of this. */
+    background: #000919;
+    color: var(--color-brand-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.55;
+  }
+
+  /* Headings — Outfit, heavy. Sets `color` (blocks inheritance) so on any
+   * surface the heading is the near-white ink unless overridden. */
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--color-brand-ink);
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--color-brand-ink);
+  }
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    color: var(--color-brand-ink);
+  }
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  ::selection {
+    background: var(--color-brand-primary);
+    color: #ffffff;
+  }
+
+  *:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(10 110 211 / 0.5);
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /*
+   * Eyebrow — small uppercase label. In Blue Hour it's set in Montserrat
+   * (the label / data-feed accent face). Single source of truth;
+   * replaces ad-hoc tracking/size combos.
+   */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(0.625rem, 2vw, 0.75rem);
+    letter-spacing: 0.2em;
+    line-height: 1;
+  }
+
+  /*
+   * section-light — a scoped LIGHT surface for the first content section that
+   * sits directly under a (dark) PageHeader. The whole site is dark and every
+   * component references design tokens, so remapping the token CSS variables
+   * here flips any token-based content to dark-on-white automatically — no
+   * per-component edits. Electric blue + state accents stay as-is (they read
+   * fine on white). Pair with components/layout/LightSection.tsx.
+   */
+  .section-light {
+    background-color: #ffffff;
+    color: var(--color-brand-ink);
+    color-scheme: light; /* native selects/scrollbars render light, not dark */
+    --color-brand-ink: #0c1c30;
+    --color-brand-ink-muted: #51647c;
+    /* Light BLUE surface ladder — clean, airy cool-blue tints (lighter and
+       fresher than the old heavy ones) so the light sections read crisp and
+       on-brand without a muddy wash. "sunken" stays a mid blue-grey (NOT
+       white) so filled shapes (skeletons, chips, balls) remain visible. */
+    --color-brand-paper: #f0f5fc;
+    --color-brand-paper-warm: #e8f0fb;
+    --color-brand-paper-muted: #f4f8fd;
+    --color-brand-paper-sunken: #e1eaf6;
+    --color-brand-border: #d7e3f1;
+    --color-brand-border-strong: #b2c5dd;
+    --color-brand-primary-soft: #e2edfb;
+    --color-brand-signal-soft: #e2edfb;
+  }
+}
+
+@layer utilities {
+  .tnum {
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+
+  /* Literal code / IDs / env vars — a true monospace. The "mono" font slot is
+     now proportional Montserrat (labels, not code), so code uses this. */
+  .code {
+    font-family: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas,
+      "Liberation Mono", monospace;
+    font-feature-settings: normal;
+  }
+
+  /* Brand accent gradient text (e.g. the hero accent word "live."). Carries a
+     solid ink fallback + a forced-colors override so the word never vanishes
+     when the gradient can't paint (unsupported background-clip, or Windows
+     High Contrast where the gradient is stripped but the fill stays). */
+  .gradient-ink {
+    color: var(--color-brand-signal);
+    background: linear-gradient(
+      135deg,
+      var(--color-brand-signal),
+      var(--color-brand-violet),
+      var(--color-brand-gold)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .gradient-ink {
+      -webkit-text-fill-color: transparent;
+    }
+  }
+  @media (forced-colors: active) {
+    .gradient-ink {
+      -webkit-text-fill-color: CanvasText;
+      color: CanvasText;
+      background: none;
+    }
+  }
+
+  /* On a dark field, depth comes from glow + subtle dark shadow. */
+  .shadow-soft {
+    box-shadow:
+      0 1px 2px rgb(0 4 12 / 0.4),
+      0 4px 14px rgb(0 4 12 / 0.45);
+  }
+  .shadow-medium {
+    box-shadow:
+      0 4px 10px rgb(0 4 12 / 0.5),
+      0 12px 28px rgb(0 4 12 / 0.5);
+  }
+  .shadow-lifted {
+    box-shadow:
+      0 8px 18px rgb(0 4 12 / 0.55),
+      0 28px 56px rgb(0 4 12 / 0.6);
+  }
+  /* Electric glow — for accent/live emphasis. */
+  .shadow-glow {
+    box-shadow:
+      0 0 0 1px rgb(10 110 211 / 0.4),
+      0 0 24px rgb(10 110 211 / 0.35);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+ * MOTION — lean, purposeful set. Every keyframe is referenced by a live
+ * component. Honours prefers-reduced-motion via the @layer base block.
+ * ════════════════════════════════════════════════════════════════════ */
+
+/* Universal entrance. */
+@keyframes fade-rise {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.fade-rise {
+  animation: fade-rise 0.8s var(--ease-standard) both;
+}
+
+/* Slow ambient rotation behind dark hero surfaces. */
+@keyframes hero-sweep {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.hero-sweep {
+  animation: hero-sweep 60s linear infinite;
+  will-change: transform;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+ * Hero lotto-ball cluster — "Living Constellation"
+ * (components/marketing/LottoCluster.tsx). Three coordinated, GPU-only
+ * (transform / opacity) motion systems, all on out-of-phase periods so the
+ * cluster never visibly "resets". Every animated SVG <g> sets
+ * `transform-box: fill-box` so its transform pivots on its own centre.
+ * Each animation's 0% frame is the resting pose, so the global
+ * prefers-reduced-motion rule degrades it to a clean static constellation.
+ * ════════════════════════════════════════════════════════════════════ */
+
+/* (1) Whole field — slow celestial sway + drift. Lives on the <svg> (class
+ *     kept as `cluster-float`), so it carries the balls AND the connecting
+ *     network together — the arcs never detach. */
+@keyframes cluster-sway {
+  0%   { transform: rotate(0deg)    translate3d(0, 0, 0); }
+  25%  { transform: rotate(2.2deg)  translate3d(8px, -12px, 0); }
+  50%  { transform: rotate(0deg)    translate3d(0, -18px, 0); }
+  75%  { transform: rotate(-2.2deg) translate3d(-8px, -12px, 0); }
+  100% { transform: rotate(0deg)    translate3d(0, 0, 0); }
+}
+.cluster-float {
+  animation: cluster-sway 20s ease-in-out infinite;
+  transform-origin: 50% 52%;
+  will-change: transform;
+}
+
+/* (2) Satellites — depth-tiered elliptical orbits + a hair of barrel-roll so
+ *     each glassy ball catches the light differently as it drifts. Front
+ *     balls travel widest (read closest); back balls drift least + sit dimmer
+ *     (read furthest) → real parallax. Per-ball inline animationDelay keeps
+ *     them out of phase. */
+.lc-ball {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform;
+}
+@keyframes lc-orbit-front {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  25%  { transform: translate(18px, -10px) rotate(2deg); }
+  50%  { transform: translate(6px, -22px) rotate(0deg); }
+  75%  { transform: translate(-16px, -10px) rotate(-2deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@keyframes lc-orbit-mid {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  25%  { transform: translate(-11px, -7px) rotate(-1.4deg); }
+  50%  { transform: translate(4px, -15px) rotate(0deg); }
+  75%  { transform: translate(11px, -6px) rotate(1.4deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@keyframes lc-orbit-back {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  25%  { transform: translate(7px, -4px) rotate(1deg); }
+  50%  { transform: translate(-3px, -9px) rotate(0deg); }
+  75%  { transform: translate(-7px, -4px) rotate(-1deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+.lc-front { animation: lc-orbit-front 16s ease-in-out infinite; }
+.lc-mid   { animation: lc-orbit-mid 19s ease-in-out infinite; }
+.lc-back  { animation: lc-orbit-back 24s ease-in-out infinite; opacity: 0.92; }
+
+/* (3) Gold focal ball — the calm anchor: buoyant lift + breathe. */
+@keyframes lc-core {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-12px) scale(1.04); }
+}
+.lc-core {
+  animation: lc-core 9s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* Connecting network — the constellation breathes in opacity. */
+@keyframes lc-arc-breathe {
+  0%, 100% { opacity: 0.18; }
+  50%      { opacity: 0.5; }
+}
+.lc-arcs {
+  animation: lc-arc-breathe 7s ease-in-out infinite;
+}
+
+/* Travelling data-feed glint — a short bright packet races along a spoke.
+ * pathLength="100" on the <line> normalises the dash maths to 0..100 so the
+ * dash sweeps the whole line regardless of its real length. */
+@keyframes lc-glint-run {
+  0%   { stroke-dashoffset: 0;    opacity: 0; }
+  6%   { opacity: 1; }
+  40%  { stroke-dashoffset: -100; opacity: 1; }
+  47%  { stroke-dashoffset: -100; opacity: 0; }
+  100% { stroke-dashoffset: -100; opacity: 0; }
+}
+.lc-glint {
+  animation: lc-glint-run 5.5s linear infinite;
+}
+
+/* Sparkle field — slow twinkle. */
+@keyframes lc-twinkle {
+  0%, 100% { opacity: 0.2; }
+  50%      { opacity: 0.62; }
+}
+.lc-spark {
+  animation: lc-twinkle 5.5s ease-in-out infinite;
+}
+
+/* Electric "just drawn / live" halo. */
+@keyframes signal-pulse {
+  0%   { box-shadow: 0 0 0 0 rgb(10 110 211 / 0.6); }
+  70%  { box-shadow: 0 0 0 14px rgb(10 110 211 / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(10 110 211 / 0); }
+}
+.signal-pulse {
+  animation: signal-pulse 2.6s var(--ease-gentle) infinite;
+}
+
+/* Lotto-ball drop + float (components/marketing/LottoBalls.tsx). */
+@keyframes lotto-ball-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(0, -12px, 0); }
+}
+@keyframes lotto-ball-drop {
+  0%   { transform: translate3d(0, -120vh, 0) rotate(-30deg); opacity: 0; }
+  60%  { opacity: 1; }
+  80%  { transform: translate3d(0, 8px, 0) rotate(4deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(0); opacity: 1; }
+}
+.lotto-ball {
+  animation:
+    lotto-ball-drop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+    lotto-ball-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Abstract aurora blobs (components/layout/AuroraBackdrop.tsx) — slow,
+ * organic drift so the decorative colour pools feel alive, not static. */
+@keyframes blob-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(0, -26px, 0) scale(1.06); }
+}
+.blob-drift {
+  animation: blob-drift 22s ease-in-out infinite;
+  will-change: transform;
+}
+.blob-drift-slow {
+  animation: blob-drift 34s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Faint flowing curve stroke — gentle dash drift for the abstract ribbons. */
+@keyframes curve-flow {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -240; }
+}
+.curve-flow {
+  animation: curve-flow 24s linear infinite;
+}
+
+/* Wire-service ticker. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee {
+  animation: marquee 45s linear infinite;
+  will-change: transform;
+}
+.marquee:hover { animation-play-state: paused; }

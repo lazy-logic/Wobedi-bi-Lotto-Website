@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 620" role="img" aria-label="A press-style cluster of nine numbered lottery balls on a warm sunburst background.">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="42%" r="65%">
+      <stop offset="0%" stop-color="#ffe680"/>
+      <stop offset="38%" stop-color="#ffac3a"/>
+      <stop offset="100%" stop-color="#cf4d0a"/>
+    </radialGradient>
+
+    <radialGradient id="ballRed" cx="35%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#fff5f5"/>
+      <stop offset="20%" stop-color="#ff7676"/>
+      <stop offset="65%" stop-color="#d31818"/>
+      <stop offset="100%" stop-color="#6e0a0a"/>
+    </radialGradient>
+    <radialGradient id="ballBlue" cx="35%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#eef4ff"/>
+      <stop offset="20%" stop-color="#71a8e3"/>
+      <stop offset="65%" stop-color="#1a4d99"/>
+      <stop offset="100%" stop-color="#0a1f4a"/>
+    </radialGradient>
+    <radialGradient id="ballGreen" cx="35%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#f0fbef"/>
+      <stop offset="20%" stop-color="#7dc888"/>
+      <stop offset="65%" stop-color="#1f7530"/>
+      <stop offset="100%" stop-color="#0a3a15"/>
+    </radialGradient>
+    <radialGradient id="ballPurple" cx="35%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#f5eefb"/>
+      <stop offset="20%" stop-color="#a883d4"/>
+      <stop offset="65%" stop-color="#5b2891"/>
+      <stop offset="100%" stop-color="#2a0f4a"/>
+    </radialGradient>
+    <radialGradient id="ballOrange1" cx="35%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#fff5e8"/>
+      <stop offset="20%" stop-color="#ffb066"/>
+      <stop offset="65%" stop-color="#d96518"/>
+      <stop offset="100%" stop-color="#7a3208"/>
+    </radialGradient>
+    <radialGradient id="ballPink" cx="35%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#fff0f8"/>
+      <stop offset="20%" stop-color="#f37db4"/>
+      <stop offset="65%" stop-color="#c4257a"/>
+      <stop offset="100%" stop-color="#690a3a"/>
+    </radialGradient>
+    <radialGradient id="ballTeal" cx="35%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#e8fafa"/>
+      <stop offset="20%" stop-color="#5db8b8"/>
+      <stop offset="65%" stop-color="#1a7a7a"/>
+      <stop offset="100%" stop-color="#0a3838"/>
+    </radialGradient>
+    <radialGradient id="ballYellow" cx="35%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#fffae0"/>
+      <stop offset="20%" stop-color="#ffd86b"/>
+      <stop offset="65%" stop-color="#e29a0a"/>
+      <stop offset="100%" stop-color="#7a4f08"/>
+    </radialGradient>
+    <radialGradient id="ballOrange2" cx="35%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#fff0e0"/>
+      <stop offset="20%" stop-color="#ff8c4a"/>
+      <stop offset="65%" stop-color="#c43e0a"/>
+      <stop offset="100%" stop-color="#6e1a08"/>
+    </radialGradient>
+
+    <radialGradient id="hi" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="hiSmall" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="600" height="620" fill="url(#bg)"/>
+
+  <!-- Subtle radiating rays from centre -->
+  <g opacity="0.16" fill="white" transform="translate(300 320)">
+    <polygon points="0,0 -30,-360 30,-360"/>
+    <polygon points="0,0 254,-254 296,-212" transform="rotate(-30)"/>
+    <polygon points="0,0 360,-30 360,30" transform="rotate(15)"/>
+    <polygon points="0,0 360,30 360,-30" transform="rotate(60)"/>
+    <polygon points="0,0 254,254 212,296" transform="rotate(110)"/>
+    <polygon points="0,0 30,360 -30,360"/>
+    <polygon points="0,0 -254,254 -296,212" transform="rotate(-30)"/>
+    <polygon points="0,0 -360,30 -360,-30" transform="rotate(15)"/>
+  </g>
+
+  <!-- Scattered champagne bubbles -->
+  <g fill="white">
+    <circle cx="68" cy="92" r="6" opacity="0.55"/>
+    <circle cx="98" cy="58" r="3" opacity="0.45"/>
+    <circle cx="540" cy="80" r="5" opacity="0.55"/>
+    <circle cx="520" cy="50" r="2" opacity="0.5"/>
+    <circle cx="40" cy="240" r="3" opacity="0.4"/>
+    <circle cx="34" cy="430" r="4" opacity="0.5"/>
+    <circle cx="72" cy="560" r="5" opacity="0.55"/>
+    <circle cx="106" cy="590" r="3" opacity="0.45"/>
+    <circle cx="560" cy="220" r="3" opacity="0.5"/>
+    <circle cx="540" cy="380" r="4" opacity="0.5"/>
+    <circle cx="568" cy="500" r="5" opacity="0.55"/>
+    <circle cx="510" cy="590" r="3" opacity="0.45"/>
+    <circle cx="220" cy="40" r="2" opacity="0.5"/>
+    <circle cx="380" cy="32" r="3" opacity="0.55"/>
+    <circle cx="280" cy="600" r="2" opacity="0.5"/>
+    <circle cx="408" cy="588" r="3" opacity="0.45"/>
+    <circle cx="180" cy="240" r="2" opacity="0.4"/>
+    <circle cx="430" cy="220" r="2" opacity="0.4"/>
+    <circle cx="200" cy="440" r="2" opacity="0.4"/>
+    <circle cx="410" cy="440" r="2" opacity="0.4"/>
+  </g>
+
+  <!-- Centre ball: red 8 -->
+  <g>
+    <circle cx="300" cy="320" r="118" fill="url(#ballRed)"/>
+    <ellipse cx="268" cy="270" rx="42" ry="22" fill="url(#hi)" transform="rotate(-22 268 270)"/>
+    <text x="300" y="362" text-anchor="middle" font-family="Montserrat, 'Arial Black', sans-serif" font-weight="900" font-size="124" fill="white" letter-spacing="-3">8</text>
+  </g>
+
+  <!-- Top: blue 8 -->
+  <g>
+    <circle cx="300" cy="105" r="72" fill="url(#ballBlue)"/>
+    <ellipse cx="282" cy="78" rx="24" ry="13" fill="url(#hiSmall)" transform="rotate(-22 282 78)"/>
+    <text x="300" y="132" text-anchor="middle" font-family="Montserrat, 'Arial Black', sans-serif" font-weight="900" font-size="76" fill="white" letter-spacing="-2">8</text>
+  </g>
+
+  <!-- Top-right: green 12 -->
+  <g>
+    <circle cx="452" cy="168" r="72" fill="url(#ballGreen)"/>
+    <ellipse cx="434" cy="141" rx="24" ry="13" fill="url(#hiSmall)" transform="rotate(-22 434 141)"/>
+    <text x="452" y="195" text-anchor="middle" font-family="Montserrat, 'Arial Black', sans-serif" font-weight="900" font-size="62" fill="white" letter-spacing="-2">12</text>
+  </g>
+
+  <!-- Right: purple 5 -->
+  <g>
+    <circle cx="515" cy="320" r="72" fill="url(#ballPurple)"/>
+    <ellipse cx="497" cy="293" rx="24" ry="13" fill="url(#hiSmall)" transform="rotate(-22 497 293)"/>
+    <text x="515" y="347" text-anchor="middle" font-family="Montserrat, 'Arial Black', sans-serif" font-weight="900" font-size="76" fill="white" letter-spacing="-2">5</text>
+  </g>
+
+  <!-- Bottom-right: orange 8 -->
+  <g>
+    <circle cx="452" cy="472" r="72" fill="url(#ballOrange1)"/>
+    <ellipse cx="434" cy="445" rx="24" ry="13" fill="url(#hiSmall)" transform="rotate(-22 434 445)"/>
+    <text x="452" y="499" text-anchor="middle" font-family="Montserrat, 'Arial Black', sans-serif" font-weight="900" font-size="76" fill="white" letter-spacing="-2">8</text>
+  </g>
+
+  <!-- Bottom: pink 4 -->
+  <g>
+    <circle cx="300" cy="535" r="72" fill="url(#ballPink)"/>
+    <ellipse cx="282" cy="508" rx="24" ry="13" fill="url(#hiSmall)" transform="rotate(-22 282 508)"/>
+    <text x="300" y="562" text-anchor="middle" font-family="Montserrat, 'Arial Black', sans-serif" font-weight="900" font-size="76" fill="white" letter-spacing="-2">4</text>
+  </g>
+
+  <!-- Bottom-left: teal 9 -->
+  <g>
+    <circle cx="148" cy="472" r="72" fill="url(#ballTeal)"/>
+    <ellipse cx="130" cy="445" rx="24" ry="13" fill="url(#hiSmall)" transform="rotate(-22 130 445)"/>
+    <text x="148" y="499" text-anchor="middle" font-family="Montserrat, 'Arial Black', sans-serif" font-weight="900" font-size="76" fill="white" letter-spacing="-2">9</text>
+  </g>
+
+  <!-- Left: yellow 1 -->
+  <g>
+    <circle cx="85" cy="320" r="72" fill="url(#ballYellow)"/>
+    <ellipse cx="67" cy="293" rx="24" ry="13" fill="url(#hiSmall)" transform="rotate(-22 67 293)"/>
+    <text x="85" y="347" text-anchor="middle" font-family="Montserrat, 'Arial Black', sans-serif" font-weight="900" font-size="76" fill="white" letter-spacing="-2">1</text>
+  </g>
+
+  <!-- Top-left: orange 5 -->
+  <g>
+    <circle cx="148" cy="168" r="72" fill="url(#ballOrange2)"/>
+    <ellipse cx="130" cy="141" rx="24" ry="13" fill="url(#hiSmall)" transform="rotate(-22 130 141)"/>
+    <text x="148" y="195" text-anchor="middle" font-family="Montserrat, 'Arial Black', sans-serif" font-weight="900" font-size="76" fill="white" letter-spacing="-2">5</text>
+  </g>
+</svg>
