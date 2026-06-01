@@ -28,7 +28,7 @@ export default async function EditDrawPage({
       <>
         <h1 className="text-4xl mb-4">Edit draw</h1>
         <div className="rounded-lg border border-brand-warning/40 bg-brand-warning/5 p-5 text-sm text-brand-ink max-w-2xl">
-          Supabase isn't configured — see <code className="code">docs/supabase-setup.md</code>.
+          Supabase isn't configured, see <code className="code">docs/supabase-setup.md</code>.
         </div>
       </>
     );
@@ -55,7 +55,7 @@ export default async function EditDrawPage({
     <>
       <Link
         href="/admin/draws"
-        className="inline-flex items-center gap-1.5 text-xs text-brand-ink-muted hover:text-brand-primary mb-2"
+        className="inline-flex items-center gap-1.5 text-xs text-brand-ink-muted hover:text-brand-signal mb-2"
       >
         <ArrowLeft size={14} strokeWidth={2} />
         All draws

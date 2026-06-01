@@ -21,7 +21,7 @@ type ProductLine = {
 const LINES: ProductLine[] = [
   {
     name: "VAG",
-    hook: "Six VAG draws, Monday through Saturday — a daily companion product across the week.",
+    hook: "Six VAG draws, Monday through Saturday, a daily companion product across the week.",
     schedule: [
       "VAG Monday", "VAG Tuesday", "VAG Wednesday",
       "VAG Thursday", "VAG Friday", "VAG Saturday",
@@ -30,21 +30,21 @@ const LINES: ProductLine[] = [
   },
   {
     name: "Noon Rush",
-    hook: "Midday NLA draws Monday through Saturday — six chances around the lunchtime window.",
+    hook: "Midday NLA draws Monday through Saturday, six chances around the lunchtime window.",
     schedule: [
       "Noon Rush Monday", "Noon Rush Tuesday", "Noon Rush Wednesday",
       "Noon Rush Thursday", "Noon Rush Friday", "Noon Rush Saturday",
     ],
-    accent: "#f6b73c", // gold — the midday sun line
+    accent: "#f6b73c", // gold, the midday sun line
   },
   {
     name: "Main Games",
-    hook: "Seven flagship NLA 5/90 draws across the week — including the National Saturday draw.",
+    hook: "Seven flagship NLA 5/90 draws across the week, including the National Saturday draw.",
     schedule: [
       "Monday Special", "Lucky Tuesday", "Midweek (Wednesday)",
       "Fortune Thursday", "Friday Bonanza", "National (Saturday)", "Sunday Aseda",
     ],
-    accent: "#8b6dff", // violet — the flagship line
+    accent: "#8b6dff", // violet, the flagship line
   },
 ];
 
@@ -79,9 +79,9 @@ export function GamesShowcase() {
       <Container>
         <div className="relative z-10 py-20 md:py-28">
           <div className="flex items-center gap-3 md:gap-4 mb-10 md:mb-14">
-            <span className="font-mono font-bold text-brand-primary tnum text-base md:text-lg">04</span>
+            <span className="font-mono font-bold text-brand-signal tnum text-base md:text-lg">04</span>
             <span className="h-px w-12 md:w-20 bg-brand-border-strong" />
-            <span className="eyebrow text-brand-ink-muted">Our products — NLA 5/90</span>
+            <span className="eyebrow text-brand-ink-muted">Our products, NLA 5/90</span>
           </div>
 
           <div className="grid gap-6 md:gap-8 md:grid-cols-12 items-end mb-12 md:mb-16">
@@ -89,7 +89,7 @@ export function GamesShowcase() {
               Nineteen NLA-licensed draws across the week.
             </h2>
             <p className="md:col-span-4 text-sm md:text-base text-brand-ink-muted leading-relaxed">
-              Three product lines — VAG, Noon Rush, and the Main Games —
+              Three product lines, VAG, Noon Rush, and the Main Games, 
               all played at NLA-licensed POS terminals through our network
               of agents and writers.
             </p>
@@ -137,7 +137,7 @@ export function GamesShowcase() {
             </span>
             <Link
               href="/games"
-              className="group inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-brand-primary hover:text-brand-signal transition-colors"
+              className="group inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-brand-signal hover:text-brand-signal transition-colors"
             >
               Browse every game
               <ArrowRight size={16} strokeWidth={2.25} className="transition-transform group-hover:translate-x-0.5" />

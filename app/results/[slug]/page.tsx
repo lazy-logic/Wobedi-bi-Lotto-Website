@@ -153,7 +153,7 @@ export default async function GameResultsPage({
                     {mostCommon}
                   </span>
                 ) : (
-                  <p className="text-base text-brand-ink-muted font-bold">—</p>
+                  <p className="text-base text-brand-ink-muted font-bold">, </p>
                 )}
               </div>
             </div>

@@ -18,7 +18,7 @@ export default async function NewDrawPage() {
     <>
       <Link
         href="/admin/draws"
-        className="inline-flex items-center gap-1.5 text-xs text-brand-ink-muted hover:text-brand-primary mb-2"
+        className="inline-flex items-center gap-1.5 text-xs text-brand-ink-muted hover:text-brand-signal mb-2"
       >
         <ArrowLeft size={14} strokeWidth={2} />
         All draws
@@ -31,7 +31,7 @@ export default async function NewDrawPage() {
 
       {!configured ? (
         <div className="rounded-lg border border-brand-warning/40 bg-brand-warning/5 p-5 text-sm text-brand-ink max-w-2xl">
-          Supabase isn't configured — see <code className="code">docs/supabase-setup.md</code>.
+          Supabase isn't configured, see <code className="code">docs/supabase-setup.md</code>.
         </div>
       ) : games.length === 0 ? (
         <div className="rounded-lg border border-brand-warning/40 bg-brand-warning/5 p-5 text-sm text-brand-ink max-w-2xl">

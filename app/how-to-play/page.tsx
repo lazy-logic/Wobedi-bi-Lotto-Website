@@ -34,7 +34,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: "What is NLA 5/90?",
-    a: "Ghana's standard lottery format: five winning numbers are drawn from a pool of ninety (1–90). Every Wobedi Bi Lotto game — VAG, Noon Rush, and the Main Games — runs on this format.",
+    a: "Ghana's standard lottery format: five winning numbers are drawn from a pool of ninety (1 to 90). Every Wobedi Bi Lotto game, VAG, Noon Rush, and the Main Games, runs on this format.",
   },
   {
     q: "How do I know an agent is legitimate?",
@@ -42,7 +42,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: "Do I have to be a certain age?",
-    a: "Yes — play is strictly limited to persons 18 years and over. Agents verify age before selling a ticket. See our responsible-play guidance for more.",
+    a: "Yes, play is strictly limited to persons 18 years and over. Agents verify age before selling a ticket. See our responsible-play guidance for more.",
   },
   {
     q: "How do I claim a prize?",
@@ -75,8 +75,8 @@ export default function HowToPlayPage() {
       />
       <PageHeader
         eyebrow="How to play"
-        title="Three steps. One approved POS. Same draws."
-        subtitle="Walk into any approved Wobedi Bi Lotto agent and play on their NLA-licensed POS terminal — the games and odds are identical everywhere."
+        title="Playing is simple."
+        subtitle="Find an approved agent, pick your numbers, and you're in. Same games, same odds, wherever you play."
       />
 
       <HowItWorks />

@@ -26,8 +26,8 @@ type GameTileProps = {
 // "TBC" placeholder. Games without a fixed single day (VAG, Noon Rush) run the
 // full Monday–Saturday week, so they read "MON–SAT".
 function watermark(label: string): string {
-  if (label === "Schedule TBC" || label === "Mon–Sat") return "MON–SAT";
-  // "Saturdays" → "SAT", "Wednesdays" → "WED", etc.
+  if (label === "Schedule TBC" || label === "Mon-Sat") return "MON-SAT";
+  // "Saturdays" to "SAT", "Wednesdays" to "WED", etc.
   return label.replace(/s$/i, "").slice(0, 3).toUpperCase();
 }
 
@@ -39,7 +39,7 @@ export function GameTile({ game }: GameTileProps) {
     <Link
       href={`/games/${game.slug}`}
       style={{ ["--accent" as string]: accent }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-brand-border bg-white transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lifted"
+      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-brand-border bg-white transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-border-strong"
     >
       {/* ── Colour header band ─────────────────────────────────────────── */}
       <div

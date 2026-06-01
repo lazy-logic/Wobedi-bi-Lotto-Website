@@ -26,14 +26,17 @@ export default async function AdminLoginPage({
   return (
     <div className="min-h-screen flex items-center justify-center bg-brand-paper-sunken px-4">
       <div className="w-full max-w-sm">
-        <Image
-          src="/brand/wobedibi-logo.png"
-          alt="Wobedi Bi Lotto"
-          width={400}
-          height={400}
-          className="h-10 w-auto mx-auto mb-8"
-        />
-        <div className="rounded-lg border border-brand-border bg-brand-paper p-8 shadow-soft">
+        {/* Logo shown as-is on a white chip (the page sits on a dark surface). */}
+        <span className="mx-auto mb-8 inline-flex items-center justify-center rounded-xl bg-white p-2 ring-1 ring-black/5">
+          <Image
+            src="/brand/wobedibi-logo.png"
+            alt="Wobedi Bi Lotto"
+            width={257}
+            height={257}
+            className="h-12 w-12 object-contain block"
+          />
+        </span>
+        <div className="rounded-lg border border-brand-border bg-brand-paper p-8">
           <h1 className="font-display text-2xl text-brand-ink mb-2">Sign in</h1>
           <p className="text-sm text-brand-ink-muted mb-6">
             Restricted to the Wobedi Bi Lotto admin role.

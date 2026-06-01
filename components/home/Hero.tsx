@@ -37,70 +37,30 @@ export async function Hero() {
   const marqueeLoop = [...marqueeItems, ...marqueeItems];
 
   return (
-    <section className="relative overflow-hidden bg-brand-paper-sunken text-brand-ink -mt-16 md:-mt-20 pt-16 md:pt-20">
-      {/* Layer 1 — electric radial glow over rich black */}
+    <section className="section-light relative overflow-hidden -mt-16 md:-mt-20 pt-16 md:pt-20">
+      {/* Soft brand-blue corner glow — a light "mesh" touch on white. */}
       <div
         aria-hidden
-        className="absolute inset-0 z-0 pointer-events-none"
+        className="pointer-events-none absolute inset-0 z-0"
         style={{
           background:
-            "radial-gradient(ellipse 80% 70% at 72% 30%, rgba(10,110,211,0.28) 0%, rgba(5,78,152,0.10) 38%, transparent 70%)",
+            "radial-gradient(ellipse 60% 55% at 88% 8%, rgba(10,110,211,0.10), transparent 60%), radial-gradient(ellipse 50% 50% at 4% 96%, rgba(59,155,255,0.08), transparent 60%)",
         }}
       />
-      {/* Layer 2 — slow electric conic sweep */}
+      {/* Faint dot grid, masked to fade. */}
       <div
         aria-hidden
-        className="absolute inset-0 z-0 pointer-events-none opacity-60"
-        style={{
-          maskImage:
-            "radial-gradient(ellipse 80% 70% at 72% 36%, black, transparent 80%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse 80% 70% at 72% 36%, black, transparent 80%)",
-        }}
-      >
-        <div
-          className="hero-sweep absolute -inset-[25%]"
-          style={{
-            background:
-              "conic-gradient(from 0deg at 50% 50%, transparent, rgba(10,110,211,0.22), transparent, rgba(59,155,255,0.14), transparent, rgba(5,78,152,0.20), transparent)",
-          }}
-        />
-      </div>
-      {/* Layer 3 — faint blue dot grid */}
-      <div
-        aria-hidden
-        className="absolute inset-0 z-0 pointer-events-none opacity-50"
+        className="pointer-events-none absolute inset-0 z-0 opacity-70"
         style={{
           backgroundImage:
-            "radial-gradient(rgba(96,150,220,0.14) 1.1px, transparent 1.1px)",
+            "radial-gradient(rgba(13,51,125,0.08) 1px, transparent 1px)",
           backgroundSize: "30px 30px",
           maskImage:
-            "linear-gradient(to bottom, black 0%, black 60%, transparent 100%)",
+            "radial-gradient(120% 90% at 30% 30%, black, transparent 75%)",
           WebkitMaskImage:
-            "linear-gradient(to bottom, black 0%, black 60%, transparent 100%)",
+            "radial-gradient(120% 90% at 30% 30%, black, transparent 75%)",
         }}
       />
-      {/* Layer 4 — warm gold + violet accent pools. The one place we let
-          non-blue light into the hero so the field stops reading as pure
-          electric blue; kept low and blurred so blue still leads. */}
-      <div aria-hidden className="absolute inset-0 z-0 pointer-events-none">
-        <span
-          className="blob-drift-slow absolute bottom-[-12%] left-[-8%] w-[34rem] h-[34rem] rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle at 50% 50%, rgba(246,183,60,0.12), transparent 68%)",
-            filter: "blur(120px)",
-          }}
-        />
-        <span
-          className="blob-drift absolute top-[8%] left-[-6%] w-[26rem] h-[26rem] rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle at 50% 50%, rgba(139,109,255,0.14), transparent 70%)",
-            filter: "blur(110px)",
-          }}
-        />
-      </div>
 
       <Container>
         {/* Eyebrow row — mono, electric marker */}
@@ -116,7 +76,7 @@ export async function Hero() {
             <span className="eyebrow text-brand-ink-muted">Trusted NLA 5/90 lotto</span>
           </div>
           <span className="hidden md:inline-flex items-center gap-2 eyebrow text-brand-ink-muted">
-            <ShieldCheck size={13} strokeWidth={2.25} className="text-brand-primary" />
+            <ShieldCheck size={13} strokeWidth={2.25} className="text-brand-signal" />
             Act 722
           </span>
         </div>
@@ -146,7 +106,7 @@ export async function Hero() {
               style={{ animationDelay: "0.4s", fontWeight: 500 }}
             >
               <span className="font-semibold text-brand-ink">Wobedi&nbsp;Bi&nbsp;Lotto</span>{" "}
-              — Ghana&rsquo;s daily NLA&nbsp;5/90 draw. Pick five numbers,
+, Ghana&rsquo;s daily NLA&nbsp;5/90 draw. Pick five numbers,
               drawn live under the National Lottery Authority, every single day.
             </p>
 
@@ -165,21 +125,21 @@ export async function Hero() {
               </Link>
               <Link
                 href="/games"
-                className="inline-flex items-center gap-2 h-13 px-8 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm text-brand-ink text-sm md:text-base font-bold uppercase tracking-wider hover:border-white/35 hover:-translate-y-0.5 transition-all"
+                className="inline-flex items-center gap-2 h-13 px-8 rounded-full border border-brand-border-strong bg-white text-brand-ink text-sm md:text-base font-bold uppercase tracking-wider hover:border-brand-primary hover:text-brand-primary hover:-translate-y-0.5 transition-all"
               >
                 Our games
               </Link>
             </div>
 
-            {/* Trust row — mono, electric live dot */}
+            {/* Trust row — small mono markers, electric live dot */}
             <div
-              className="fade-rise mt-8 md:mt-10 flex flex-wrap items-center gap-x-4 gap-y-2 eyebrow text-brand-ink-muted"
+              className="fade-rise mt-8 md:mt-10 flex flex-wrap items-center gap-x-3 gap-y-2 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.16em] text-brand-ink-muted"
               style={{ animationDelay: "0.7s" }}
             >
-              <span className="inline-flex items-center gap-2">
-                <span className="relative flex w-2 h-2">
+              <span className="inline-flex items-center gap-1.5">
+                <span className="relative flex w-1.5 h-1.5">
                   <span className="absolute inline-flex w-full h-full rounded-full bg-brand-primary opacity-80 animate-ping" />
-                  <span className="relative inline-flex w-2 h-2 rounded-full bg-brand-primary" />
+                  <span className="relative inline-flex w-1.5 h-1.5 rounded-full bg-brand-primary" />
                 </span>
                 Live draws
               </span>
@@ -187,7 +147,7 @@ export async function Hero() {
               <span>NLA-licensed</span>
               <span className="text-brand-border-strong">/</span>
               <span className="inline-flex items-center gap-1.5">
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-brand-primary text-white text-[10px] font-extrabold">
+                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-brand-danger text-white text-[9px] font-extrabold">
                   18+
                 </span>
                 <span>Strictly 18 and over</span>
@@ -195,69 +155,31 @@ export async function Hero() {
             </div>
           </div>
 
-          {/* Cluster column — bigger, vivid, individually-animated balls on
-              a multi-hue aura (celtic · violet · gold · teal) */}
+          {/* Cluster column — standalone balls on the white hero (no panel).
+              Soft tinted auras only, so the colourful balls read cleanly on
+              white without a dark backing. */}
           <div className="lg:col-span-6 lg:order-2 order-1 flex justify-center">
             <div
-              className="fade-rise relative w-full max-w-[min(94vw,660px)] md:max-w-[820px] lg:w-[112%] lg:max-w-none xl:w-[122%] lg:-mt-10 xl:-mt-14"
+              className="fade-rise relative w-full max-w-[min(78vw,500px)] md:max-w-[600px] lg:w-[92%] lg:max-w-none xl:w-[96%] lg:-mt-8 xl:-mt-10"
               style={{ animationDelay: "0.25s" }}
             >
-              {/* Bright core — makes the glass balls pop off the dark field */}
+              {/* Soft brand-blue aura behind the balls — light, for depth on
+                  white (no hard glow). */}
               <div
                 aria-hidden
-                className="absolute inset-[16%] z-0 rounded-full pointer-events-none"
+                className="absolute inset-[-4%] z-0 rounded-full pointer-events-none"
                 style={{
                   background:
-                    "radial-gradient(circle, rgba(255,255,255,0.18), rgba(255,255,255,0) 60%)",
-                  filter: "blur(46px)",
-                }}
-              />
-              {/* Celtic halo — top */}
-              <div
-                aria-hidden
-                className="absolute inset-[-12%] z-0 rounded-full pointer-events-none"
-                style={{
-                  background:
-                    "radial-gradient(circle at 50% 24%, rgba(10,110,211,0.48), rgba(10,110,211,0) 60%)",
+                    "radial-gradient(circle at 50% 45%, rgba(10,110,211,0.12), rgba(10,110,211,0) 60%)",
                   filter: "blur(70px)",
-                }}
-              />
-              {/* Violet pool — bottom-left */}
-              <div
-                aria-hidden
-                className="absolute inset-[-8%] z-0 rounded-full pointer-events-none"
-                style={{
-                  background:
-                    "radial-gradient(circle at 20% 82%, rgba(139,109,255,0.38), rgba(139,109,255,0) 55%)",
-                  filter: "blur(62px)",
-                }}
-              />
-              {/* Gold pool — bottom-right */}
-              <div
-                aria-hidden
-                className="absolute inset-[-8%] z-0 rounded-full pointer-events-none"
-                style={{
-                  background:
-                    "radial-gradient(circle at 80% 82%, rgba(246,183,60,0.34), rgba(246,183,60,0) 55%)",
-                  filter: "blur(60px)",
-                }}
-              />
-              {/* Teal glint — top-right */}
-              <div
-                aria-hidden
-                className="absolute inset-[-6%] z-0 rounded-full pointer-events-none"
-                style={{
-                  background:
-                    "radial-gradient(circle at 82% 22%, rgba(31,201,168,0.26), rgba(31,201,168,0) 50%)",
-                  filter: "blur(56px)",
                 }}
               />
 
               <LottoCluster
                 className="cluster-float relative z-10 w-full h-auto"
                 style={{
-                  filter:
-                    "drop-shadow(0 36px 70px rgba(0,6,15,0.72)) drop-shadow(0 0 48px rgba(10,110,211,0.34))",
+                  // Soft grounding shadow only — no dark-field glow.
+                  filter: "drop-shadow(0 18px 36px rgba(13,51,125,0.22))",
                 }}
               />
             </div>
@@ -265,37 +187,53 @@ export async function Hero() {
         </div>
       </Container>
 
-      {/* Wire ticker — mono, electric markers on deepest dark */}
-      <div className="relative z-10 overflow-hidden border-t border-brand-border bg-brand-paper-sunken text-brand-ink">
-        <div className="flex items-center gap-3 py-4">
-          <span className="ml-5 md:ml-8 flex-shrink-0 inline-flex items-center gap-2 eyebrow text-brand-primary">
-            <span className="relative flex w-2 h-2">
-              <span className="absolute inline-flex w-full h-full rounded-full bg-brand-primary opacity-75 animate-ping" />
-              <span className="relative inline-flex w-2 h-2 rounded-full bg-brand-primary" />
+      {/* Live results ticker — a clean dark strip with a LIVE pill, an
+          edge-faded marquee of the latest winning numbers. */}
+      <div className="relative z-10 border-y border-white/10 bg-[#06122b] text-brand-ink">
+        <div className="flex items-stretch">
+          {/* LIVE pill — fixed on the left, the marquee scrolls past it */}
+          <span className="z-10 flex flex-shrink-0 items-center gap-2 bg-brand-primary px-4 md:px-5 text-[11px] font-bold uppercase tracking-[0.2em] text-white">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-white opacity-70 animate-ping" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
             </span>
-            Wire
+            Live
           </span>
-          <span className="h-4 w-px bg-brand-border flex-shrink-0" />
-          <div className="flex-1 overflow-hidden">
-            <div className="marquee flex items-center gap-8 whitespace-nowrap font-mono text-sm">
-              {marqueeLoop.length > 0
-                ? marqueeLoop.map((item, i) => (
-                    <span key={i} className="inline-flex items-center gap-3">
-                      <span className="font-bold uppercase tracking-wider text-brand-ink">
-                        {item.name}
-                      </span>
-                      <span className="text-brand-primary">·</span>
-                      <span className="tnum tracking-wider text-brand-ink-muted">
-                        {item.numbers.join("  ·  ")}
-                      </span>
-                      <span className="px-4 text-brand-border-strong">———</span>
+
+          {/* Marquee, faded at both edges */}
+          <div
+            className="relative flex-1 overflow-hidden py-3.5"
+            style={{
+              maskImage:
+                "linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent)",
+              WebkitMaskImage:
+                "linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent)",
+            }}
+          >
+            <div className="marquee flex items-center gap-10 whitespace-nowrap pl-6 text-sm">
+              {marqueeLoop.length > 0 ? (
+                marqueeLoop.map((item, i) => (
+                  <span key={i} className="inline-flex items-center gap-3">
+                    <span className="font-display font-bold uppercase tracking-wide text-white">
+                      {item.name}
                     </span>
-                  ))
-                : (
-                  <span className="text-sm text-brand-ink-muted">
-                    Latest winning numbers publish here the moment each draw lands.
+                    <span className="inline-flex items-center gap-1.5 font-mono tnum text-brand-signal">
+                      {item.numbers.map((n, j) => (
+                        <span
+                          key={j}
+                          className="inline-flex h-6 min-w-6 items-center justify-center rounded bg-white/10 px-1.5 text-xs font-bold text-white"
+                        >
+                          {n}
+                        </span>
+                      ))}
+                    </span>
                   </span>
-                )}
+                ))
+              ) : (
+                <span className="text-sm text-brand-ink-muted">
+                  Latest winning numbers publish here the moment each draw lands.
+                </span>
+              )}
             </div>
           </div>
         </div>

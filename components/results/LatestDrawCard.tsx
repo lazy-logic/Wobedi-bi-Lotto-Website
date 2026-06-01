@@ -1,28 +1,24 @@
 /**
  * The signature card that surfaces a single game's most recent draw.
  *
- * Used in three places: the Home results widget, the Results page hero strip,
- * and the per-game results detail.
+ * Used in three places: the Home results widget, the Results page grid, and
+ * the per-game results detail.
  *
- * Refinements 2026-04-30 (later in the day):
- *  - Smaller title (`text-xl md:text-2xl`) so multi-word names like
- *    "Fortune Thursday" no longer wrap to two lines and force the card
- *    taller than its siblings.
- *  - `h-full` so the article fills its grid row regardless of content
- *    length — siblings always end up the same height.
- *  - Raw logo image (no white ball wrapper) sits in the top-right
- *    corner. The 3D ball is too much next to the colour stripe and the
- *    blue number balls below.
+ * "Result ticket" design: a clean white card where the WINNING NUMBERS lead at
+ * the top as the dominant element, separated from the game details by a
+ * perforated (dashed) divider with notch cut-outs — like a lottery slip. The
+ * game's colour shows only as a small dot + the accent on the day and CTA, so
+ * the numbers stay the focus and the grid reads calm but distinctive.
  *
- * The `layoutId` makes the card a shared-element transition target for
- * Framer Motion when navigating between Home, Results, and Game Detail.
+ * The `layoutId` makes the card a shared-element transition target for Framer
+ * Motion when navigating between Home, Results, and Game Detail.
  */
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { m } from "framer-motion";
-import { ArrowRight, CalendarClock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { NumberRow } from "./NumberRow";
 import type { Game } from "@/lib/games";
 import type { Draw } from "@/lib/results";
@@ -48,55 +44,54 @@ export function LatestDrawCard({
   linkToArchive = true,
   animated = true,
 }: Props) {
-  const stripeColor = game.ballColor ?? "#0a6ed3";
+  const accent = game.ballColor ?? "#0a6ed3";
   const daysToNext = daysUntilNextDraw(game.schedule);
 
   const inner = (
     <m.article
       layoutId={`draw-${game.slug}`}
       transition={{ duration: 0.4, ease: [0.3, 0, 0, 1] }}
+      style={{ ["--accent" as string]: accent }}
       className={cn(
-        "group relative flex flex-col h-full rounded-2xl border border-brand-border bg-brand-paper overflow-hidden transition-all duration-300 ease-[var(--ease-gentle)]",
-        linkToArchive &&
-          "hover:shadow-lifted hover:-translate-y-1 hover:border-brand-border-strong hover:drop-shadow-[0_0_20px_rgba(10,110,211,0.25)]",
+        "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-brand-border bg-white transition-all duration-300 ease-[var(--ease-gentle)]",
+        linkToArchive && "hover:-translate-y-1 hover:border-brand-border-strong",
         className,
       )}
     >
-      {/* Top stripe — brand identifier per game */}
-      <div
-        aria-hidden
-        className="h-1.5 w-full"
-        style={{ background: stripeColor }}
-      />
+      {/* Slim accent bar — the card's only colour identifier up top. */}
+      <span aria-hidden className="block h-1 w-full" style={{ background: accent }} />
 
-      <div className="flex flex-col flex-1 p-6 md:p-7">
-        {/* Logo — raw, top-right corner (no ball wrapper) */}
-        {game.logoUrl && (
-          <div className="absolute top-5 right-5 w-11 h-11 flex items-center justify-center pointer-events-none">
+      {/* ── Header: logo + game name + schedule, left-aligned ────────── */}
+      <div className="flex items-center gap-3 px-6 pt-5 md:px-7">
+        {game.logoUrl ? (
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center transition-transform duration-300 group-hover:scale-105">
             <Image
               src={game.logoUrl}
               alt=""
-              width={88}
-              height={88}
-              className="object-contain max-w-full max-h-full w-auto h-auto"
+              width={96}
+              height={96}
+              className="h-auto max-h-full w-auto max-w-full object-contain"
             />
-          </div>
+          </span>
+        ) : (
+          <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: accent }} />
         )}
-
-        <header className="pr-14">
-          <p className="eyebrow text-brand-ink-muted">
-            {game.scheduleLabel}
-          </p>
-          <h3 className="font-display font-extrabold text-xl md:text-2xl mt-1.5 leading-tight tracking-[-0.02em] text-brand-ink">
+        <div className="min-w-0">
+          <h3 className="font-display font-extrabold text-lg md:text-xl leading-tight tracking-[-0.015em] text-brand-ink truncate">
             {game.name}
           </h3>
-          <p className="text-xs text-brand-ink-muted mt-1.5 tnum">
-            Drawn {formatDate(draw.drawDate)} · #{draw.drawNumber}
+          <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: accent }}>
+            {game.scheduleLabel}
           </p>
-        </header>
+        </div>
+      </div>
 
-        {/* Numbers — centred, given their own breathing room */}
-        <div className="flex justify-center py-6 md:py-7">
+      {/* ── Winning numbers — centred hero ───────────────────────────── */}
+      <div className="px-6 py-7 md:px-7 text-center">
+        <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-ink-muted">
+          Winning numbers
+        </span>
+        <div className="mt-3.5 flex justify-center">
           <NumberRow
             numbers={draw.numbers}
             bonusNumbers={draw.bonusNumbers}
@@ -104,27 +99,35 @@ export function LatestDrawCard({
             animated={animated}
           />
         </div>
+        <p className="mt-3.5 text-[11px] font-medium text-brand-ink-muted tnum">
+          Drawn {formatDate(draw.drawDate)} · #{draw.drawNumber}
+        </p>
+      </div>
 
-        {/* Footer pinned to the bottom */}
-        <footer className="mt-auto pt-4 border-t border-brand-border flex items-center justify-between text-xs">
-          {daysToNext !== null ? (
-            <span className="inline-flex items-center gap-1.5 font-semibold text-brand-ink-muted">
-              <CalendarClock size={13} strokeWidth={2} className="text-brand-primary" />
-              Next draw in{" "}
-              <span className="text-brand-primary tnum">
-                {daysToNext} {daysToNext === 1 ? "day" : "days"}
-              </span>
+      {/* ── Footer bar — a soft tinted strip, clean split ────────────── */}
+      <div
+        className="mt-auto flex items-center justify-between border-t border-brand-border px-6 py-4 text-xs md:px-7"
+        style={{ backgroundColor: "color-mix(in srgb, var(--accent) 6%, white)" }}
+      >
+        {daysToNext !== null ? (
+          <span className="font-medium text-brand-ink-muted">
+            Next in{" "}
+            <span className="font-bold text-brand-ink tnum">
+              {daysToNext} {daysToNext === 1 ? "day" : "days"}
             </span>
-          ) : (
-            <span className="text-brand-ink-muted">Schedule TBC</span>
-          )}
-          {linkToArchive && (
-            <span className="inline-flex items-center gap-1 font-semibold text-brand-primary group-hover:gap-2 transition-all">
-              Archive
-              <ArrowRight size={12} strokeWidth={2.5} />
-            </span>
-          )}
-        </footer>
+          </span>
+        ) : (
+          <span className="text-brand-ink-muted">Schedule pending</span>
+        )}
+        {linkToArchive && (
+          <span
+            className="inline-flex items-center gap-1 font-bold transition-all group-hover:gap-2"
+            style={{ color: accent }}
+          >
+            Archive
+            <ArrowRight size={12} strokeWidth={2.5} />
+          </span>
+        )}
       </div>
     </m.article>
   );

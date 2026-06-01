@@ -37,8 +37,9 @@ const SECTIONS: LegalSection[] = [
             logs and (where you consent) analytics cookies.
           </li>
           <li>
-            <strong>Cookies and local storage:</strong> see our{" "}
-            <a href="/legal/cookies">Cookie Policy</a> for the full breakdown.
+            <strong>Cookies and local storage:</strong> essential cookies to
+            run the site and, with your consent, analytics cookies. See the
+            Cookies section below.
           </li>
         </ul>
         <p>
@@ -122,9 +123,10 @@ const SECTIONS: LegalSection[] = [
     body: (
       <>
         <p>
-          See our <a href="/legal/cookies">Cookie Policy</a> for the full
-          list of cookies in use, their purpose, and how to manage your
-          preferences.
+          We use essential cookies to run the site and, with your consent,
+          analytics cookies to understand usage. You can manage or clear
+          cookies at any time through your browser settings; disabling essential
+          cookies may affect how the site works.
         </p>
       </>
     ),
@@ -146,8 +148,8 @@ export default function PrivacyPage() {
     <>
       <PageHeader
         eyebrow="Legal"
-        title="Privacy policy."
-        subtitle="How we collect, use, and protect your personal data. Aligned with the Ghana Data Protection Act 2012 (Act 843)."
+        title="Your privacy."
+        subtitle="What we collect, why, and how we keep it safe, in line with Ghana's Data Protection Act 2012 (Act 843)."
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Legal" },

@@ -74,7 +74,7 @@ export default function NotFound() {
             </Link>
             <Link
               href="/results"
-              className="inline-flex items-center gap-2 h-12 px-7 rounded-full border border-brand-primary/40 text-brand-primary text-base font-semibold hover:bg-brand-paper-muted hover:border-brand-primary transition-all"
+              className="inline-flex items-center gap-2 h-12 px-7 rounded-full border border-brand-primary/40 text-brand-signal text-base font-semibold hover:bg-brand-paper-muted hover:border-brand-primary transition-all"
             >
               <Trophy size={18} strokeWidth={2} />
               Latest results

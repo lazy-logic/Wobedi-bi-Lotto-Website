@@ -34,7 +34,7 @@ export default function ResultsError({
           </h1>
           <p className="mt-6 text-base md:text-lg text-brand-ink-muted leading-relaxed max-w-lg mx-auto">
             We couldn&rsquo;t load the latest draws. Check your connection and try
-            again — the official NLA record is always authoritative.
+            again, the official NLA record is always authoritative.
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
             <button
@@ -47,7 +47,7 @@ export default function ResultsError({
             </button>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 h-12 px-7 rounded-full border border-brand-primary/40 text-brand-primary text-base font-semibold hover:bg-brand-paper-muted hover:border-brand-primary transition-all"
+              className="inline-flex items-center gap-2 h-12 px-7 rounded-full border border-brand-primary/40 text-brand-signal text-base font-semibold hover:bg-brand-paper-muted hover:border-brand-primary transition-all"
             >
               <Home size={18} strokeWidth={2} />
               Go home

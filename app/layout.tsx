@@ -44,11 +44,11 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    default: "Wobedi Bi Lotto — Trusted NLA-licensed lotto in Ghana",
+    default: "Wobedi Bi Lotto, Trusted NLA-licensed lotto in Ghana",
     template: "%s · Wobedi Bi Lotto",
   },
   description:
-    "Wobedi Bi Lotto is a trusted, NLA-licensed lotto operator in Ghana. Daily NLA 5/90 draws — VAG, Noon Rush, and Main Games. Reliable agents, transparent results, responsible play.",
+    "Wobedi Bi Lotto is a trusted, NLA-licensed lotto operator in Ghana. Daily NLA 5/90 draws, VAG, Noon Rush, and Main Games. Reliable agents, transparent results, responsible play.",
   metadataBase: new URL("https://wobedibilotto.com"),
   alternates: { canonical: "/" },
   openGraph: {
@@ -56,21 +56,21 @@ export const metadata: Metadata = {
     locale: "en_GH",
     siteName: "Wobedi Bi Lotto",
     url: "/",
-    title: "Wobedi Bi Lotto — Trusted NLA-licensed lotto in Ghana",
+    title: "Wobedi Bi Lotto, Trusted NLA-licensed lotto in Ghana",
     description:
-      "Trusted NLA 5/90 draws — VAG, Noon Rush, and Main Games. Transparent results, reliable agents, responsible play.",
+      "Trusted NLA 5/90 draws, VAG, Noon Rush, and Main Games. Transparent results, reliable agents, responsible play.",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Wobedi Bi Lotto — lotto played for real.",
+        alt: "Wobedi Bi Lotto, lotto played for real.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wobedi Bi Lotto — Trusted NLA-licensed lotto in Ghana",
+    title: "Wobedi Bi Lotto, Trusted NLA-licensed lotto in Ghana",
     description:
       "Trusted NLA 5/90 draws across Ghana. Transparent results, reliable agents, responsible play.",
     images: ["/opengraph-image"],

@@ -1,9 +1,9 @@
 /**
- * A single winning-number chip — rounded "lottery ball" style.
+ * A single winning-number chip — flat SQUARE tile style.
  *
  * VISUAL DECISIONS:
- *  - CIRCULAR (rounded-full) — reads as a real lottery ball rather than an
- *    abstract square. Updated 2026-04-30 (was square; see ADR 0005).
+ *  - SQUARE (rounded-md), flat solid fill — a clean, modern result tile rather
+ *    than a glossy 3D ball. (The earlier circular-ball treatment is retired.)
  *  - Tabular numerals (`tnum`) so digits don't shift width when results refresh.
  *  - Aria-label calls each number out individually for screen readers.
  *
@@ -32,16 +32,17 @@ type NumberChipProps = {
 };
 
 const sizeClasses = {
-  sm: "w-9 h-9 text-sm",
-  md: "w-11 h-11 text-base md:w-12 md:h-12 md:text-lg",
-  lg: "w-12 h-12 text-lg md:w-14 md:h-14 md:text-xl",
+  sm: "w-8 h-8 text-sm",
+  md: "w-10 h-10 text-base md:w-11 md:h-11 md:text-lg",
+  lg: "w-11 h-11 text-lg md:w-12 md:h-12 md:text-xl",
 };
 
 const variantClasses = {
-  primary: "text-white",
-  bonus: "text-white",
-  // muted = a pale "blank" ball, so its label is dark for contrast.
-  muted: "text-[#001226]",
+  // Flat solid square tiles — no gradient, no glow.
+  primary: "text-white bg-brand-primary",
+  bonus: "text-white bg-brand-signal-deep",
+  // muted = a pale "blank" tile, so its label is dark for contrast.
+  muted: "text-[#0c1c30] bg-brand-paper-sunken",
 };
 
 export function NumberChip({
@@ -51,30 +52,15 @@ export function NumberChip({
   index = 0,
   animated = true,
 }: NumberChipProps) {
-  // Ball-style circular chip with subtle gradient + highlight for that
-  // "real lottery ball" feel.
-  // Electric-blue glassy balls that glow on the dark "Blue Hour" field.
-  const ballStyle = {
-    background:
-      variant === "primary"
-        ? "radial-gradient(circle at 30% 25%, #5fb0ff 0%, #0a6ed3 52%, #043f7d 100%)"
-        : variant === "bonus"
-          ? "radial-gradient(circle at 30% 25%, #8fcbff 0%, #2f8be6 52%, #084a8f 100%)"
-          : "radial-gradient(circle at 30% 25%, #ffffff 0%, #cdd8e8 55%, #9fb0c8 100%)",
-    boxShadow:
-      "inset -2px -3px 5px rgba(0,8,20,0.30), inset 1px 1px 3px rgba(255,255,255,0.45), 0 4px 14px rgba(10,110,211,0.45)",
-  };
-
   if (!animated) {
     return (
       <span
         aria-label={`Winning number ${value}`}
         className={cn(
-          "inline-flex items-center justify-center font-bold tnum rounded-full",
+          "inline-flex items-center justify-center font-extrabold tnum rounded-md",
           sizeClasses[size],
           variantClasses[variant],
         )}
-        style={ballStyle}
       >
         {value}
       </span>
@@ -92,11 +78,10 @@ export function NumberChip({
         ease: [0.2, 0, 0, 1],
       }}
       className={cn(
-        "inline-flex items-center justify-center font-bold tnum rounded-full",
+        "inline-flex items-center justify-center font-extrabold tnum rounded-md",
         sizeClasses[size],
         variantClasses[variant],
       )}
-      style={ballStyle}
     >
       {value}
     </motion.span>

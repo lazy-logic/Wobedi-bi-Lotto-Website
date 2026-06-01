@@ -1,9 +1,8 @@
 /**
- * Shared layout for legal pages. Provides:
+ * Shared layout for legal pages (terms, privacy). Provides:
  *   - Two-column grid: sticky table-of-contents on the right (desktop),
  *     scrollable body on the left
  *   - Last-updated date metadata
- *   - Counsel-review banner if `counselReviewPending` is true (defaults true)
  *
  * Each section in `sections` becomes both a TOC entry and a `<section>`
  * with the matching id, so anchor links work via the URL hash.
@@ -23,27 +22,12 @@ export type LegalSection = {
 type LegalLayoutProps = {
   lastUpdated: string;
   sections: LegalSection[];
-  counselReviewPending?: boolean;
 };
 
-export function LegalLayout({
-  lastUpdated,
-  sections,
-  counselReviewPending = true,
-}: LegalLayoutProps) {
+export function LegalLayout({ lastUpdated, sections }: LegalLayoutProps) {
   return (
     <LightSection className="py-16 md:py-20">
       <Container>
-        {counselReviewPending && (
-          <div className="mb-10 rounded-2xl border border-brand-warning/40 bg-brand-warning/5 p-5 text-sm text-brand-ink">
-            <p className="font-bold text-brand-warning uppercase tracking-wider text-xs mb-1">
-              Draft — pending counsel review
-            </p>
-            This text is a working draft to support design review. The final
-            version must be reviewed by qualified counsel before launch.
-          </div>
-        )}
-
         <div className="grid gap-10 lg:gap-14 lg:grid-cols-12">
           {/* Body */}
           <div className="lg:col-span-8 space-y-12">

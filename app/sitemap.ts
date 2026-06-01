@@ -25,8 +25,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/media`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
     { url: `${BASE}/legal/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${BASE}/legal/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${BASE}/legal/license`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${BASE}/legal/cookies`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
 
   const gameRoutes: MetadataRoute.Sitemap = games.flatMap((g) => [

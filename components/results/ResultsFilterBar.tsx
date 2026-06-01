@@ -81,7 +81,7 @@ export function ResultsFilterBar({ gameOptions }: { gameOptions: Option[] }) {
           <button
             type="button"
             onClick={() => router.replace("?", { scroll: false })}
-            className="inline-flex items-center gap-1 h-11 md:h-9 px-3 text-xs font-medium text-brand-ink-muted hover:text-brand-primary"
+            className="inline-flex items-center gap-1 h-11 md:h-9 px-3 text-xs font-medium text-brand-ink-muted hover:text-brand-signal"
           >
             <X size={12} strokeWidth={2} />
             Clear filters

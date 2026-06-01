@@ -5,9 +5,7 @@
  * statement — sourced directly from the company brief.
  */
 import type { Metadata } from "next";
-import Link from "next/link";
 import {
-  ArrowRight,
   ShieldCheck,
   Target,
   Users,
@@ -25,7 +23,7 @@ import { LightSection } from "@/components/layout/LightSection";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Wobedi Bi Lotto is a trusted, customer-focused lottery company committed to providing exciting, transparent, and responsible gaming experiences across Ghana — lottery operations, digital gaming, and agent-based services led by a dedicated management team.",
+    "Wobedi Bi Lotto is a trusted, customer-focused lottery company committed to providing exciting, transparent, and responsible gaming experiences across Ghana, lottery operations, digital gaming, and agent-based services led by a dedicated management team.",
 };
 
 const PILLARS: { title: string; body: string; icon: LucideIcon }[] = [
@@ -90,29 +88,66 @@ export default function AboutPage() {
     <>
       <PageHeader
         eyebrow="About us"
-        title="Welcome to Wobedi Bi Lotto."
-        subtitle="A trusted Ghanaian lotto company, NLA-licensed under the National Lotto Act 2006 (Act 722), built on integrity, transparency, and responsible gaming."
+        title="A Ghanaian lotto built on trust."
+        subtitle="We run fair, NLA-licensed 5/90 draws and back them with a network of agents who keep the game close to home."
       />
 
-      {/* Who we are — narrative */}
+      {/* Who we are — editorial two-column narrative */}
       <LightSection className="py-20 md:py-24">
         <Container>
-          <div className="max-w-2xl mx-auto space-y-7 text-base md:text-lg leading-relaxed text-brand-ink">
-            <p>
-              Wobedi Bi Lotto is a trusted and customer-focused lottery company
-              committed to providing exciting, transparent, and responsible
-              gaming experiences across Ghana. The company specializes in
-              lottery operations, digital gaming solutions, and agent-based
-              services designed to create opportunities for players while
-              promoting convenience and reliability.
-            </p>
-            <p className="text-brand-ink-muted">
-              At Wobedi Bi Lotto, we believe in integrity, innovation, and
-              excellent customer service. Our mission is to deliver secure and
-              rewarding lottery services through modern technology and
-              professional operations, while contributing positively to the
-              communities we serve.
-            </p>
+          <div className="grid gap-10 lg:gap-16 lg:grid-cols-12 items-start">
+            {/* Left rail — eyebrow, lead statement, at-a-glance chips */}
+            <div className="lg:col-span-5">
+              <div className="flex items-center gap-2.5 mb-5">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
+                <span className="eyebrow text-brand-primary">Who we are</span>
+              </div>
+              <h2 className="font-display font-extrabold text-3xl md:text-4xl xl:text-[2.75rem] leading-[1.1] tracking-[-0.025em] text-brand-ink text-balance">
+                A trusted, customer-focused{" "}
+                <span className="gradient-ink">Ghanaian lotto.</span>
+              </h2>
+
+              {/* At-a-glance chips */}
+              <div className="mt-8 flex flex-wrap gap-2.5">
+                {[
+                  { icon: ShieldCheck, label: "NLA-licensed" },
+                  { icon: Users, label: "Agent network" },
+                  { icon: Cpu, label: "Modern systems" },
+                ].map((c) => (
+                  <span
+                    key={c.label}
+                    className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3.5 py-2 text-sm font-semibold text-brand-ink"
+                  >
+                    <c.icon size={15} strokeWidth={2} className="text-brand-primary" />
+                    {c.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Right — narrative prose, first paragraph as a lead */}
+            <div className="lg:col-span-7 lg:pt-2">
+              <p className="text-xl md:text-2xl leading-relaxed text-brand-ink text-balance">
+                Wobedi Bi Lotto is a trusted and customer-focused lottery
+                company committed to providing exciting, transparent, and
+                responsible gaming experiences across Ghana.
+              </p>
+              <div className="mt-6 space-y-5 text-base md:text-lg leading-relaxed text-brand-ink-muted border-l-2 border-brand-border pl-6">
+                <p>
+                  The company specializes in lottery operations, digital gaming
+                  solutions, and agent-based services designed to create
+                  opportunities for players while promoting convenience and
+                  reliability.
+                </p>
+                <p>
+                  We believe in integrity, innovation, and excellent customer
+                  service. Our mission is to deliver secure and rewarding
+                  lottery services through modern technology and professional
+                  operations, while contributing positively to the communities
+                  we serve.
+                </p>
+              </div>
+            </div>
           </div>
         </Container>
       </LightSection>
@@ -133,7 +168,7 @@ export default function AboutPage() {
             {PILLARS.map((p, i) => (
               <div
                 key={p.title}
-                className="fade-rise rounded-2xl border border-brand-border bg-white p-6 shadow-soft transition-all duration-300 hover:shadow-medium hover:-translate-y-0.5"
+                className="fade-rise rounded-2xl border border-brand-border bg-white p-6 transition-all duration-300 hover:border-brand-border-strong hover:-translate-y-0.5"
                 style={{ animationDelay: `${i * 80}ms` }}
               >
                 <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-brand-primary-soft text-brand-primary mb-4">
@@ -186,12 +221,6 @@ export default function AboutPage() {
                   operations, customer service, administration, finance, and
                   strategic management.
                 </p>
-                <p className="text-white/55">
-                  As a growing company, our leadership remains committed to
-                  innovation, operational excellence, and delivering quality
-                  services that meet the needs of our customers and
-                  stakeholders.
-                </p>
               </div>
             </div>
 
@@ -218,82 +247,30 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* Vision + Mission — light editorial split with an asymmetric
-          two-column layout and oversized index numerals. Uses the
-          section-light scope so brand tokens read dark-on-light. */}
-      <section className="section-light relative overflow-hidden py-24 md:py-32">
+      {/* Vision + Mission — minimal: two quiet labelled statements. */}
+      <section className="section-light py-24 md:py-32">
         <Container>
-          <div className="relative z-10 max-w-5xl mx-auto">
-            {/* Section eyebrow */}
-            <div className="flex items-center gap-3 mb-12 md:mb-16">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
-              <span className="eyebrow text-brand-ink-muted">What drives us</span>
-              <span className="h-px flex-1 bg-gradient-to-r from-brand-border-strong to-transparent" />
+          <div className="max-w-5xl mx-auto grid gap-12 md:gap-16 md:grid-cols-2">
+            <div>
+              <p className="eyebrow text-brand-primary mb-4">Our vision</p>
+              <h2 className="font-display font-extrabold text-2xl md:text-3xl leading-[1.2] tracking-[-0.02em] text-brand-ink text-balance">
+                To become one of the most trusted and innovative lotto
+                companies in Ghana, recognised for excellence, transparency,
+                and customer satisfaction.
+              </h2>
             </div>
 
-            <div className="grid gap-x-12 gap-y-14 md:grid-cols-12">
-              {/* Vision — the larger, leading statement */}
-              <div className="md:col-span-7">
-                <div className="flex items-baseline gap-4">
-                  <span className="font-display font-black text-brand-primary/25 tnum text-2xl leading-none select-none">
-                    01
-                  </span>
-                  <p className="eyebrow text-brand-primary">Our vision</p>
-                </div>
-                <h2 className="mt-5 font-display font-extrabold text-[1.75rem] md:text-4xl xl:text-[2.75rem] leading-[1.14] tracking-[-0.025em] text-brand-ink text-balance">
-                  To become one of the most trusted and innovative lotto
-                  companies in Ghana — recognised for{" "}
-                  <span className="gradient-ink">excellence, transparency,
-                  and customer satisfaction.</span>
-                </h2>
-              </div>
-
-              {/* Mission — the supporting prose, set apart by a vertical rule */}
-              <div className="md:col-span-5 md:border-l md:border-brand-border md:pl-12">
-                <div className="flex items-baseline gap-4">
-                  <span className="font-display font-black text-brand-primary/25 tnum text-2xl leading-none select-none">
-                    02
-                  </span>
-                  <p className="eyebrow text-brand-ink-muted">Our mission</p>
-                </div>
-                <p className="mt-5 text-base md:text-lg leading-relaxed text-brand-ink-muted text-balance">
-                  To deliver secure and rewarding lottery services through
-                  modern technology and professional operations — empowering
-                  our agents, supporting our customers, and contributing
-                  positively to the communities we serve.
-                </p>
-              </div>
-            </div>
-
-            {/* Minimal CTA — one quiet line + a single pill, divider above. */}
-            <div className="mt-14 md:mt-20 pt-10 border-t border-brand-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
-              <p className="text-base md:text-lg text-brand-ink">
-                Have a question, or interested in becoming an agent?
+            <div>
+              <p className="eyebrow text-brand-primary mb-4">Our mission</p>
+              <p className="text-base md:text-lg leading-relaxed text-brand-ink-muted text-balance">
+                To deliver secure and rewarding lottery services through modern
+                technology and professional operations, empowering our agents,
+                supporting our customers, and contributing positively to the
+                communities we serve.
               </p>
-              <Link
-                href="/contact"
-                className="group inline-flex items-center gap-2 h-12 px-7 rounded-full bg-brand-primary text-white text-base font-semibold hover:bg-brand-primary-deep transition-all whitespace-nowrap"
-              >
-                Get in touch
-                <ArrowRight
-                  size={18}
-                  strokeWidth={2}
-                  className="transition-transform group-hover:translate-x-0.5"
-                />
-              </Link>
             </div>
           </div>
         </Container>
-
-        {/* Multi-hue gradient hairline at the bottom, echoing the PageHeader. */}
-        <div
-          aria-hidden
-          className="absolute bottom-0 inset-x-0 h-px pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(90deg, transparent, #0a6ed3, #8b6dff, #f6b73c, #1fc9a8, transparent)",
-          }}
-        />
       </section>
     </>
   );

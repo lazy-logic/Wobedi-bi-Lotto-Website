@@ -18,9 +18,9 @@
  */
 import Link from "next/link";
 import {
-  Target,
-  Store,
-  Sparkles,
+  Ticket,
+  MapPin,
+  Trophy,
   ArrowRight,
   type LucideIcon,
 } from "lucide-react";
@@ -39,21 +39,21 @@ const STEPS: Step[] = [
   {
     number: "01",
     numberShadow: "1",
-    icon: Target,
+    icon: Ticket,
     title: "Pick your game",
     body: "Browse our NLA-licensed draws across mid-week and weekend slots. Pick what fits the day.",
   },
   {
     number: "02",
     numberShadow: "2",
-    icon: Store,
+    icon: MapPin,
     title: "Visit an approved POS",
     body: "Walk into any approved agent and play on their NLA-licensed POS terminal.",
   },
   {
     number: "03",
     numberShadow: "3",
-    icon: Sparkles,
+    icon: Trophy,
     title: "Watch for the draw",
     body: "Results stream here within minutes of the official NLA draw.",
   },
@@ -95,7 +95,7 @@ export function HowItWorks() {
                     {step.numberShadow}
                   </span>
                   {/* Icon on top — gradient fill, lifts on hover */}
-                  <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-primary to-brand-primary-deep text-white shadow-soft transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lifted">
+                  <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-primary to-brand-primary-deep text-white transition-all duration-300 group-hover:-translate-y-1">
                     <Icon size={28} strokeWidth={1.75} />
                   </div>
                 </div>

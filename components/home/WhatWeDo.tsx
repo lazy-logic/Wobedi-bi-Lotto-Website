@@ -16,13 +16,12 @@
  * rather than six uniform blue cards.
  */
 import { Container } from "@/components/layout/Container";
-import { AuroraBackdrop } from "@/components/layout/AuroraBackdrop";
 
 type Commitment = {
   index: string;
   title: string;
   body: string;
-  accent: string; // CSS color literal — feeds the corner triangle + number
+  accent: string; // CSS color literal, feeds the corner triangle + number
 };
 
 const COMMITMENTS: Commitment[] = [
@@ -66,12 +65,9 @@ const COMMITMENTS: Commitment[] = [
 
 export function WhatWeDo() {
   return (
-    <section className="relative overflow-hidden bg-brand-paper-warm border-t border-brand-border">
-      {/* Abstract gold aurora */}
-      <AuroraBackdrop tone="gold" />
-
+    <section className="section-light relative overflow-hidden">
       <Container>
-        <div className="relative z-10 py-20 md:py-28">
+        <div className="py-20 md:py-28">
           {/* Eyebrow */}
           <div className="flex items-center gap-3 md:gap-4 mb-10 md:mb-14">
             <span className="font-display font-extrabold text-brand-primary tnum text-base md:text-lg">
@@ -89,8 +85,8 @@ export function WhatWeDo() {
               Six commitments that shape every draw.
             </h2>
             <p className="md:col-span-4 text-sm md:text-base text-brand-ink-muted leading-relaxed">
-              Every part of the operation — from head office to a kiosk in
-              Adansi-Asokwa — is held to these same six things.
+              Every part of the operation, from head office to a kiosk in
+              Adansi-Asokwa, is held to these same six things.
             </p>
           </div>
 
@@ -108,7 +104,7 @@ export function WhatWeDo() {
 
 function CommitmentTile({ index, title, body, accent }: Commitment) {
   return (
-    <div className="group relative bg-brand-paper p-7 md:p-9 overflow-hidden transition-colors duration-300 hover:bg-brand-paper-muted">
+    <div className="group relative bg-white p-7 md:p-9 overflow-hidden transition-colors duration-300 hover:bg-brand-paper-muted">
       {/* Coloured corner triangle — the per-tile accent */}
       <div
         aria-hidden

@@ -18,7 +18,7 @@ type BadgeProps = {
 const variantClasses = {
   default: "bg-brand-paper-muted text-brand-ink border border-brand-border",
   primary: "bg-brand-primary text-white",
-  secondary: "bg-brand-primary-deep/10 text-brand-primary border border-brand-primary-deep/30",
+  secondary: "bg-brand-primary-deep/10 text-brand-signal border border-brand-primary-deep/30",
   muted: "bg-brand-paper-sunken text-brand-ink-muted border border-brand-border",
 };
 

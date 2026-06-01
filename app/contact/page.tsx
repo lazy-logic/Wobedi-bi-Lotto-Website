@@ -1,29 +1,41 @@
 /**
- * /contact — real contact page with form + office details.
+ * /contact — modern contact page.
  *
- * The form below is a static UI mock — the action POSTS to /api/contact
- * which doesn't exist yet. Wire it to an email service (Resend, Postmark,
- * Supabase Edge Function) before launch.
+ * Layout:
+ *   1. PageHeader (dark band).
+ *   2. Framed map card (top) with an address chip overlaid on it.
+ *   3. Quick-contact row — three tappable action cards (Call · Email · Visit).
+ *   4. Two-panel band: the message form (light card) beside a dark "contact
+ *      rail" with office details, compliance route, and NLA verification.
  *
- * Fields use React Hook Form-friendly naming so swapping in RHF + Zod is a
- * trivial follow-up.
+ * The form is a static UI mock — its action POSTs to /api/contact, which does
+ * not exist yet. Wire it to an email service (Resend, Postmark, Supabase Edge
+ * Function) before launch. Fields use RHF-friendly names so swapping in
+ * React Hook Form + Zod is a trivial follow-up.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Mail, Phone, MapPin, Clock, Building2, ShieldCheck } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  ShieldCheck,
+  ArrowUpRight,
+  Send,
+} from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { LightSection } from "@/components/layout/LightSection";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { NLA_REGISTER_URL } from "@/lib/regulatory";
 
-// Google Maps embed for the head-office location. Uses the `q=` query
-// parameter so we don't have to compute a place_id / pb=…cid… URL — Maps
-// resolves the search server-side. Loading is lazy so the iframe doesn't
-// block first paint. The `z=14` query param locks an initial zoom; a
-// transparent overlay blocks pointer events so visitors can't pan or
-// scroll-zoom — the map reads as a static reference image.
-const OFFICE_QUERY = "Wobedi Bi Lotto, Adansi-Asokwa, Adansi Asokwa District, Ashanti Region, Ghana";
-const MAP_EMBED_SRC = `https://www.google.com/maps?q=${encodeURIComponent(OFFICE_QUERY)}&z=14&output=embed`;
+// Google Maps embed centred on Adansi-Asokwa via LAT/LNG coordinates (not a
+// `q=` place search) — coordinates render a clean map with NO place info-card,
+// rating box, or POI popup. Lazy-loaded; a transparent overlay absorbs pointer
+// events so the map reads as a static reference image.
+const OFFICE_LAT = 6.2547;
+const OFFICE_LNG = -1.4699;
+const MAP_EMBED_SRC = `https://maps.google.com/maps?ll=${OFFICE_LAT},${OFFICE_LNG}&z=13&output=embed`;
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -39,223 +51,294 @@ const SUBJECTS = [
   { value: "press", label: "Press & partnerships" },
 ];
 
+const QUICK = [
+  {
+    icon: Phone,
+    label: "Call us",
+    value: "054 303 0032",
+    href: "tel:+233543030032",
+    note: "Mon-Fri · 8am-6pm",
+  },
+  {
+    icon: Mail,
+    label: "Email us",
+    value: "info@wobedibi.com",
+    href: "mailto:info@wobedibi.com",
+    note: "Reply within 2 working days",
+  },
+  {
+    icon: MapPin,
+    label: "Visit us",
+    value: "Adansi-Asokwa",
+    href: "#contact-map",
+    note: "Ashanti Region, Ghana",
+  },
+];
+
+const FIELD =
+  "w-full rounded-xl border border-brand-border-strong bg-white px-4 text-base text-brand-ink placeholder:text-brand-ink-muted/60 transition-colors focus:border-brand-primary focus:outline-none";
+
 export default function ContactPage() {
   return (
     <>
       <PageHeader
         eyebrow="Contact"
-        title="Reach the team."
-        subtitle="Office details, contact form, and direct routes for compliance and press enquiries."
+        title="We're here to help."
+        subtitle="Call us, send a message, or drop by the office, whatever's easiest. We answer within two working days."
       />
 
-      <LightSection className="py-16 md:py-20">
+      {/* ── Full-bleed map (top, flush against the header) ────────────────
+          Edge-to-edge, no gap below the PageHeader. Nothing is written over
+          the map — it shows the location cleanly. A transparent overlay still
+          absorbs pointer events so the embed's own rating/info popups and
+          controls never appear; the map reads as a static reference image. */}
+      <section
+        id="contact-map"
+        className="relative overflow-hidden scroll-mt-24"
+        aria-label="Map showing the Wobedi Bi Lotto head office in Adansi-Asokwa, Ashanti Region, Ghana"
+      >
+        <iframe
+          title="Map showing the Wobedi Bi Lotto office in Adansi-Asokwa, Ashanti Region, Ghana"
+          src={MAP_EMBED_SRC}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          className="block w-full h-[150px] md:h-[220px]"
+          allowFullScreen
+        />
+        {/* Transparent overlay — blocks panning/zoom and the embed's info &
+            rating popups so the map reads as a static reference image. */}
+        <div aria-hidden className="absolute inset-0 pointer-events-auto" />
+
+        {/* Soft inset edge framing so the full-bleed map meets the page
+            cleanly (no text, purely visual). */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/10"
+          style={{
+            boxShadow:
+              "inset 0 14px 28px -18px rgba(13,51,125,0.45), inset 0 -14px 28px -18px rgba(13,51,125,0.45)",
+          }}
+        />
+      </section>
+
+      {/* ── Form + contact rail ───────────────────────────────────────── */}
+      <LightSection className="pt-10 md:pt-14 pb-12 md:pb-16" wave="left">
         <Container>
-          <div className="grid gap-10 lg:gap-14 lg:grid-cols-12">
-            {/* Form column */}
+          <div className="grid gap-6 lg:gap-8 lg:grid-cols-12">
+            {/* Form */}
             <div className="lg:col-span-7">
-              <h2 className="font-display font-extrabold text-2xl md:text-3xl text-brand-ink mb-2">
-                Send us a message
-              </h2>
-              <p className="text-sm text-brand-ink-muted mb-8">
-                We aim to respond within two working days. For urgent
-                compliance matters, use the direct email below.
-              </p>
-
-              <form
-                action="/api/contact"
-                method="post"
-                className="rounded-2xl border border-brand-border bg-brand-paper p-6 md:p-8 shadow-soft space-y-5"
-              >
-                <div className="grid gap-5 md:grid-cols-2">
-                  <label className="block">
-                    <span className="block text-xs font-bold uppercase tracking-wider text-brand-ink-muted mb-1.5">
-                      Your name
-                    </span>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      autoComplete="name"
-                      className="w-full h-11 px-3.5 rounded-md border border-brand-border-strong bg-white text-base focus:border-brand-primary focus:outline-none"
-                    />
-                  </label>
-                  <label className="block">
-                    <span className="block text-xs font-bold uppercase tracking-wider text-brand-ink-muted mb-1.5">
-                      Email
-                    </span>
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      autoComplete="email"
-                      className="w-full h-11 px-3.5 rounded-md border border-brand-border-strong bg-white text-base focus:border-brand-primary focus:outline-none"
-                    />
-                  </label>
-                </div>
-                <label className="block">
-                  <span className="block text-xs font-bold uppercase tracking-wider text-brand-ink-muted mb-1.5">
-                    Subject
-                  </span>
-                  <select
-                    name="subject"
-                    required
-                    defaultValue="general"
-                    className="w-full h-11 px-3 rounded-md border border-brand-border-strong bg-white text-base focus:border-brand-primary focus:outline-none"
-                  >
-                    {SUBJECTS.map((s) => (
-                      <option key={s.value} value={s.value}>
-                        {s.label}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="block">
-                  <span className="block text-xs font-bold uppercase tracking-wider text-brand-ink-muted mb-1.5">
-                    Message
-                  </span>
-                  <textarea
-                    name="message"
-                    required
-                    rows={6}
-                    className="w-full px-3.5 py-3 rounded-md border border-brand-border-strong bg-white text-base focus:border-brand-primary focus:outline-none resize-none"
-                  />
-                </label>
-
-                <p className="text-xs text-brand-ink-muted">
-                  By submitting you agree to the{" "}
-                  <Link href="/legal/privacy" className="text-brand-primary hover:underline">
-                    Privacy Policy
-                  </Link>
-                  . We use your details to respond to this enquiry only.
+              <div className="rounded-3xl border border-brand-border bg-white p-6 md:p-9">
+                <h2 className="font-display font-extrabold text-2xl md:text-3xl text-brand-ink tracking-[-0.015em]">
+                  Send us a message
+                </h2>
+                <p className="mt-2 text-sm text-brand-ink-muted">
+                  Fill in the form and we'll get back to you. For urgent
+                  compliance matters, use the direct route on the right.
                 </p>
 
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center h-12 px-7 rounded-full bg-brand-primary text-white font-semibold hover:bg-brand-primary-deep transition-all"
-                >
-                  Send message
-                </button>
-              </form>
+                <form action="/api/contact" method="post" className="mt-8 space-y-5">
+                  <div className="grid gap-5 md:grid-cols-2">
+                    <label className="block">
+                      <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-brand-ink-muted">
+                        Your name
+                      </span>
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        autoComplete="name"
+                        placeholder="Kwame Mensah"
+                        className={`${FIELD} h-12`}
+                      />
+                    </label>
+                    <label className="block">
+                      <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-brand-ink-muted">
+                        Email
+                      </span>
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        autoComplete="email"
+                        placeholder="you@example.com"
+                        className={`${FIELD} h-12`}
+                      />
+                    </label>
+                  </div>
+                  <label className="block">
+                    <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-brand-ink-muted">
+                      Subject
+                    </span>
+                    <select
+                      name="subject"
+                      required
+                      defaultValue="general"
+                      className={`${FIELD} h-12`}
+                    >
+                      {SUBJECTS.map((s) => (
+                        <option key={s.value} value={s.value}>
+                          {s.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="block">
+                    <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-brand-ink-muted">
+                      Message
+                    </span>
+                    <textarea
+                      name="message"
+                      required
+                      rows={6}
+                      placeholder="How can we help?"
+                      className={`${FIELD} resize-none py-3`}
+                    />
+                  </label>
+
+                  <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="text-xs text-brand-ink-muted">
+                      By submitting you agree to the{" "}
+                      <Link href="/legal/privacy" className="text-brand-primary hover:underline">
+                        Privacy Policy
+                      </Link>
+                      .
+                    </p>
+                    <button
+                      type="submit"
+                      className="group inline-flex items-center justify-center gap-2 h-12 px-7 rounded-full bg-brand-primary text-white font-semibold hover:bg-brand-primary-deep transition-colors"
+                    >
+                      Send message
+                      <Send
+                        size={16}
+                        strokeWidth={2.25}
+                        className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      />
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
 
-            {/* Details column */}
-            <aside className="lg:col-span-5 space-y-5">
-              <div className="rounded-2xl border border-brand-border bg-brand-paper-muted p-6 md:p-7">
-                <Building2 size={22} strokeWidth={1.75} className="text-brand-primary mb-3" />
-                <h3 className="font-display font-extrabold text-lg text-brand-ink mb-4">
-                  Head office
-                </h3>
-                <dl className="space-y-3.5 text-sm">
-                  <div className="flex gap-3">
-                    <MapPin size={16} strokeWidth={2} className="text-brand-ink-muted mt-0.5 flex-shrink-0" />
-                    <dd className="text-brand-ink">
-                      Wobedi Bi Lotto<br />
-                      Adansi-Asokwa<br />
-                      Adansi Asokwa District, Ashanti Region<br />
-                      Ghana
+            {/* Contact rail — genuinely dark panel for contrast. Uses a
+                hardcoded dark surface (NOT a brand-paper token) so the
+                surrounding section-light scope can't wash it to pale blue. */}
+            <aside className="lg:col-span-5">
+              <div
+                className="relative h-full overflow-hidden rounded-3xl p-6 md:p-9 text-white"
+                style={{ backgroundColor: "#06182f", colorScheme: "dark" }}
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#3b9bff]" />
+                  <span className="eyebrow text-white/60">Head office</span>
+                </div>
+
+                <address className="mt-4 not-italic text-lg font-display font-bold leading-snug text-white">
+                  Wobedi Bi Lotto<br />
+                  Adansi-Asokwa, Ashanti Region<br />
+                  Ghana
+                </address>
+
+                <dl className="mt-7 space-y-5 text-sm">
+                  <div className="flex gap-3.5">
+                    <Phone size={18} strokeWidth={2} className="mt-0.5 flex-shrink-0 text-[#3b9bff]" />
+                    <dd className="tnum space-y-0.5 text-white/85">
+                      <a href="tel:+233543030032" className="block hover:text-white">054 303 0032</a>
+                      <a href="tel:+233553023181" className="block hover:text-white">055 302 3181</a>
+                      <a href="tel:+233246084296" className="block hover:text-white">024 608 4296</a>
                     </dd>
                   </div>
-                  <div className="flex gap-3">
-                    <Phone size={16} strokeWidth={2} className="text-brand-ink-muted mt-0.5 flex-shrink-0" />
-                    <dd className="tnum text-brand-ink space-y-0.5">
-                      <a href="tel:+233543030032" className="block hover:text-brand-primary">054 303 0032</a>
-                      <a href="tel:+233553023181" className="block hover:text-brand-primary">055 302 3181</a>
-                      <a href="tel:+233246084296" className="block hover:text-brand-primary">024 608 4296</a>
-                    </dd>
-                  </div>
-                  <div className="flex gap-3">
-                    <Mail size={16} strokeWidth={2} className="text-brand-ink-muted mt-0.5 flex-shrink-0" />
-                    <a href="mailto:info@wobedibilotto.com" className="text-brand-primary hover:underline">
-                      info@wobedibilotto.com
-                    </a>
-                  </div>
-                  <div className="flex gap-3">
-                    <Clock size={16} strokeWidth={2} className="text-brand-ink-muted mt-0.5 flex-shrink-0" />
-                    <dd className="text-brand-ink">
-                      Mon–Fri · 8am–6pm<br />
-                      Sat · 9am–2pm
+                  <div className="flex gap-3.5">
+                    <Clock size={18} strokeWidth={2} className="mt-0.5 flex-shrink-0 text-[#3b9bff]" />
+                    <dd className="text-white/85">
+                      Mon-Fri · 8am-6pm<br />
+                      Sat · 9am-2pm
                     </dd>
                   </div>
                 </dl>
-              </div>
 
-              <div className="rounded-2xl border border-brand-border bg-brand-paper p-6 md:p-7">
-                <ShieldCheck size={22} strokeWidth={1.75} className="text-brand-primary mb-3" />
-                <h3 className="font-display font-extrabold text-lg text-brand-ink mb-2">
-                  Compliance &amp; responsible play
-                </h3>
-                <p className="text-sm text-brand-ink-muted mb-3">
-                  For underage-play reports, self-exclusion requests, or
-                  compliance matters, write directly to:
+                {/* Compliance route */}
+                <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.05] p-5">
+                  <div className="flex items-center gap-2.5">
+                    <ShieldCheck size={18} strokeWidth={2} className="text-[#3b9bff]" />
+                    <span className="text-sm font-bold text-white">Compliance &amp; responsible play</span>
+                  </div>
+                  <p className="mt-2 text-xs text-white/65 leading-relaxed">
+                    Underage-play reports, self-exclusion, or compliance matters:
+                  </p>
+                  <a
+                    href="mailto:compliance@wobedibilotto.com"
+                    className="mt-2 block text-sm font-semibold text-[#3b9bff] hover:text-white break-words"
+                  >
+                    compliance@wobedibilotto.com
+                  </a>
+                  <Link
+                    href="/responsible-play"
+                    className="mt-3 inline-flex items-center gap-1 text-xs text-white/60 hover:text-white"
+                  >
+                    Read our responsible-play guidance
+                    <ArrowUpRight size={13} strokeWidth={2} />
+                  </Link>
+                </div>
+
+                <p className="mt-6 text-xs text-white/55">
+                  Verify our NLA registration at{" "}
+                  <a
+                    href={NLA_REGISTER_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-[#3b9bff] hover:text-white"
+                  >
+                    nla.com.gh
+                  </a>
+                  .
                 </p>
-                <a
-                  href="mailto:compliance@wobedibilotto.com"
-                  className="block text-brand-primary font-semibold hover:underline mb-3"
-                >
-                  compliance@wobedibilotto.com
-                </a>
-                <Link
-                  href="/responsible-play"
-                  className="text-sm text-brand-ink-muted hover:text-brand-primary"
-                >
-                  Read our responsible-play guidance →
-                </Link>
-              </div>
-
-              <div className="rounded-2xl border border-brand-border bg-brand-paper-sunken p-6 md:p-7 text-sm text-brand-ink-muted">
-                Verify our NLA registration on the public register at{" "}
-                <a
-                  href={NLA_REGISTER_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-brand-primary font-semibold hover:underline"
-                >
-                  nla.com.gh
-                </a>
-                .
               </div>
             </aside>
           </div>
         </Container>
       </LightSection>
 
-      {/* Map — heading inside Container, but the iframe itself breaks the
-          Container width and runs full-bleed across the viewport. Half the
-          previous height for a tighter strip. Lazy-loaded so it doesn't
-          block initial render. */}
-      <section className="section-light pt-16 md:pt-20 pb-20 md:pb-24" aria-labelledby="contact-map-heading">
+      {/* ── Quick-contact action row (bottom of page) ──────────────────── */}
+      <LightSection className="pb-16 md:pb-24" wave="right">
         <Container>
-          <div className="mb-5">
-            <p className="eyebrow text-brand-primary mb-2">
-              Find us
-            </p>
-            <h2
-              id="contact-map-heading"
-              className="font-display font-extrabold text-2xl md:text-3xl text-brand-ink"
-            >
-              Adansi-Asokwa, Ashanti Region.
-            </h2>
+          <div className="mb-6 flex items-center gap-2.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
+            <span className="eyebrow text-brand-ink-muted">Quick contact</span>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {QUICK.map((q) => (
+              <a
+                key={q.label}
+                href={q.href}
+                className="group relative flex items-center gap-4 rounded-2xl border border-brand-border bg-white p-5 pr-10 transition-all duration-300 hover:-translate-y-1 hover:border-brand-primary/40"
+              >
+                {/* Icon — inline, to the left of the text */}
+                <span className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-brand-primary-soft text-brand-primary">
+                  <q.icon size={20} strokeWidth={2} />
+                </span>
+
+                {/* Text block */}
+                <div className="min-w-0">
+                  <span className="block text-[11px] font-bold uppercase tracking-[0.18em] text-brand-ink-muted">
+                    {q.label}
+                  </span>
+                  <span className="block font-display font-extrabold text-lg text-brand-ink leading-tight break-words">
+                    {q.value}
+                  </span>
+                  <span className="block text-xs text-brand-ink-muted">{q.note}</span>
+                </div>
+
+                {/* Arrow — pinned top-right corner */}
+                <ArrowUpRight
+                  size={18}
+                  strokeWidth={2}
+                  className="absolute top-4 right-4 text-brand-ink-muted transition-all group-hover:text-brand-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </a>
+            ))}
           </div>
         </Container>
-
-        {/* Full-bleed map strip — outside the Container so it edges the
-            viewport. Top/bottom borders give it visual containment without
-            losing the full-width feel. The transparent overlay sits on top
-            of the iframe to absorb every pointer event — no panning, no
-            scroll-zoom, no info-card clicks. The map reads as a static
-            reference image. */}
-        <div className="relative overflow-hidden border-y border-brand-border bg-brand-paper">
-          <iframe
-            title="Map showing the Wobedi Bi Lotto office in Adansi-Asokwa, Ashanti Region, Ghana"
-            src={MAP_EMBED_SRC}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="w-full h-[180px] md:h-[230px] block"
-            allowFullScreen
-          />
-          <div aria-hidden className="absolute inset-0 pointer-events-auto bg-transparent" />
-        </div>
-      </section>
+      </LightSection>
     </>
   );
 }

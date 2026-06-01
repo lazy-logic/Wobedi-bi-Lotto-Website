@@ -32,6 +32,17 @@ export default function HomePage() {
       />
       <Hero />
       <WhoWeAre />
+      {/* Divider between the two white sections (Who we are → What we do).
+          A short, bold brand-blue bar centred on a hairline rule so it reads
+          as a deliberate break, not a faint line. */}
+      <div className="section-light">
+        <div className="mx-auto max-w-[1200px] px-4 md:px-6 lg:px-8">
+          <div className="relative flex items-center justify-center">
+            <span className="absolute inset-x-0 h-px bg-brand-border" />
+            <span className="relative h-1.5 w-16 rounded-full bg-brand-primary" />
+          </div>
+        </div>
+      </div>
       <WhatWeDo />
       <GamesShowcase />
       <VisionMission />

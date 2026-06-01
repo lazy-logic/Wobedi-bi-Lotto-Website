@@ -31,7 +31,7 @@ export function TrustStrip() {
         <div className="py-10 md:py-14">
           {/* Eyebrow row */}
           <div className="flex items-center gap-3 md:gap-4 mb-8 md:mb-10">
-            <span className="font-display font-extrabold text-brand-primary tnum text-base md:text-lg">
+            <span className="font-display font-extrabold text-brand-signal tnum text-base md:text-lg">
               02
             </span>
             <span className="h-px w-12 md:w-20 bg-brand-border" />
@@ -47,7 +47,7 @@ export function TrustStrip() {
                 key={m.label}
                 className="bg-brand-paper p-6 md:p-8 flex flex-col"
               >
-                <span className="font-display font-black text-4xl md:text-5xl xl:text-6xl text-brand-primary leading-none tnum tracking-tight">
+                <span className="font-display font-black text-4xl md:text-5xl xl:text-6xl text-brand-signal leading-none tnum tracking-tight">
                   {m.label}
                 </span>
                 <span className="mt-4 text-xs md:text-sm text-brand-ink-muted leading-snug">
@@ -63,7 +63,7 @@ export function TrustStrip() {
               href={NLA_REGISTER_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-bold uppercase tracking-wider hover:text-brand-primary transition-colors"
+              className="font-bold uppercase tracking-wider hover:text-brand-signal transition-colors"
             >
               {NLA_LICENCE_NUMBER
                 ? `Verify licence #${NLA_LICENCE_NUMBER} →`
@@ -71,16 +71,18 @@ export function TrustStrip() {
             </Link>
             <Link
               href="/responsible-play"
-              className="font-bold uppercase tracking-wider hover:text-brand-primary transition-colors"
+              className="font-bold uppercase tracking-wider hover:text-brand-signal transition-colors"
             >
               Play responsibly →
             </Link>
-            <Link
-              href="/legal/license"
-              className="font-bold uppercase tracking-wider hover:text-brand-primary transition-colors"
+            <a
+              href={NLA_REGISTER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold uppercase tracking-wider hover:text-brand-signal transition-colors"
             >
-              Licence &amp; regulation →
-            </Link>
+              Verify on NLA register →
+            </a>
           </div>
         </div>
       </Container>

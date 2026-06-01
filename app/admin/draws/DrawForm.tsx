@@ -97,7 +97,7 @@ export function DrawForm({ action, games, initial, submitLabel }: Props) {
         </Field>
       </div>
 
-      <Field label="Drawn at" htmlFor="drawnAt" hint="Optional — exact timestamp the draw was held.">
+      <Field label="Drawn at" htmlFor="drawnAt" hint="Optional, exact timestamp the draw was held.">
         <input
           id="drawnAt"
           name="drawnAt"

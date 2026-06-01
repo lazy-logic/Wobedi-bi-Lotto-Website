@@ -1,17 +1,14 @@
 /**
  * PageHeader — the header band at the top of every non-home page.
  *
- * Minimal-yet-modern: a quiet dark "Blue Hour" band that pairs with the white
- * content section below it. Stripped back to the essentials — a single,
- * barely-there accent (one soft radial glow + a faint fine-line grid), a small
- * accent-dot eyebrow, a clean Outfit title, and one hairline. No drifting
- * ribbons, no five-colour aurora, no multi-hue gradient rule. The restraint is
- * the point: the type carries the page, the decoration just keeps it from
- * reading flat.
+ * Deep-royal brand band (#0D337D — the real WObedibi blue, matching the logo)
+ * with a flowing "corporate wave" ribbon sweeping across the lower edge — a
+ * family of tonal-blue curves rising left-to-right, purely decorative (no
+ * text on the art). A soft glow adds depth; the title + eyebrow sit on the
+ * clear upper-left field, well clear of the waves.
  *
  * The `tone` prop is still accepted (call sites pass it / it's auto-picked) but
- * now drives only the hue of that one accent, so pages stay subtly varied
- * without the visual noise.
+ * is now a no-op — every header uses the one brand band for consistency.
  *
  * The negative top margin + matching top padding pull the band UP under the
  * transparent floating navbar.
@@ -40,9 +37,10 @@ type PageHeaderProps = {
   tone?: Tone;
 };
 
-// The brand light blue. The header keeps one cool accent everywhere — the
-// glow and the eyebrow dot — so pages stay consistent and never read warm.
-const ACCENT = "#3b9bff";
+// The real WObedibi brand blue — the PageHeader band.
+const BRAND = "#0d337d";
+// A brighter sky-blue accent that pops on the royal band (glow + eyebrow dot).
+const ACCENT = "#5b9bff";
 
 export function PageHeader({
   eyebrow,
@@ -52,30 +50,73 @@ export function PageHeader({
   children,
 }: PageHeaderProps) {
   return (
-    <section className="relative overflow-hidden bg-brand-paper-sunken text-white -mt-16 md:-mt-20 pt-16 md:pt-20 border-b border-white/10">
-      {/* One soft glow, top-right. Always the brand light blue — the single
-          concession to colour, kept cool so it never reads warm/gold. */}
+    <section
+      className="relative overflow-hidden text-white -mt-16 md:-mt-20 pt-16 md:pt-20 border-b border-white/10"
+      style={{
+        // Band led by the exact logo navy (#0D337D). Only a whisper of
+        // darkening toward the bottom for depth — never lighter than the logo,
+        // so the header reads as the same navy as the mark.
+        background: `linear-gradient(170deg, ${BRAND} 0%, #0c2f72 55%, #0a275f 100%)`,
+      }}
+    >
+      {/* One soft sky-blue glow, top-right — subtle depth behind the title.
+          Kept low so the band stays the logo navy, not lifted lighter. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-1/3 right-[-10%] h-[34rem] w-[34rem] rounded-full opacity-50"
+        className="pointer-events-none absolute -top-1/3 right-[-10%] h-[34rem] w-[34rem] rounded-full opacity-25"
         style={{
           background: `radial-gradient(circle at 50% 50%, ${ACCENT}, transparent 70%)`,
           filter: "blur(120px)",
         }}
       />
 
-      {/* Faint fine-line grid — a quiet modern texture, masked to fade out. */}
+      {/* Flowing "corporate wave" ribbon — tonal-blue curves sweeping across
+          the lower edge, rising left→right. Decorative only (no text). Sits
+          full-bleed behind the content; the title block stays upper-left. */}
+      <svg
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 w-full h-[55%] md:h-[68%]"
+        viewBox="0 0 1440 320"
+        preserveAspectRatio="none"
+        fill="none"
+      >
+        {/* back wave — faintest, highest crest */}
+        <path
+          d="M0,210 C 260,140 520,150 760,205 C 1000,260 1220,250 1440,175 L1440,320 L0,320 Z"
+          fill="#ffffff"
+          fillOpacity="0.05"
+        />
+        {/* mid wave */}
+        <path
+          d="M0,250 C 300,190 560,200 820,248 C 1060,292 1240,288 1440,232 L1440,320 L0,320 Z"
+          fill="#5b9bff"
+          fillOpacity="0.16"
+        />
+        {/* hairline crest on the mid wave */}
+        <path
+          d="M0,250 C 300,190 560,200 820,248 C 1060,292 1240,288 1440,232"
+          stroke="#9cc4ff"
+          strokeOpacity="0.5"
+          strokeWidth="2"
+        />
+        {/* front wave — brightest, lowest, anchors the bottom edge */}
+        <path
+          d="M0,288 C 320,244 600,252 880,290 C 1110,320 1280,316 1440,284 L1440,320 L0,320 Z"
+          fill="#3b9bff"
+          fillOpacity="0.30"
+        />
+      </svg>
+
+      {/* Overlay scrim — a darker brand-blue (#0D337D = rgb 13,51,125) tint
+          deepening toward the upper-left over the glow + waves. Unifies the
+          decoration and keeps the title + subtitle crisp. Sits above the art,
+          below the content. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.6]"
+        className="pointer-events-none absolute inset-0"
         style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)",
-          backgroundSize: "56px 56px",
-          maskImage:
-            "radial-gradient(120% 100% at 50% 0%, black 30%, transparent 75%)",
-          WebkitMaskImage:
-            "radial-gradient(120% 100% at 50% 0%, black 30%, transparent 75%)",
+          background:
+            "linear-gradient(115deg, rgba(8,32,84,0.96) 0%, rgba(10,40,100,0.82) 40%, rgba(13,51,125,0.55) 72%, rgba(13,51,125,0.30) 100%)",
         }}
       />
 
@@ -121,7 +162,7 @@ export function PageHeader({
           </h1>
 
           {subtitle && (
-            <p className="mt-4 text-base md:text-lg text-white/65 leading-relaxed max-w-2xl text-balance">
+            <p className="mt-4 text-base md:text-lg text-white/85 leading-relaxed max-w-2xl text-balance">
               {subtitle}
             </p>
           )}
@@ -129,17 +170,6 @@ export function PageHeader({
           {children && <div className="mt-6">{children}</div>}
         </div>
       </Container>
-
-      {/* Multi-hue gradient hairline along the bottom edge — the one bit of
-          colour that carries over, marking the seam into the white section. */}
-      <div
-        aria-hidden
-        className="absolute bottom-0 inset-x-0 h-px pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent, #0a6ed3, #8b6dff, #f6b73c, #1fc9a8, transparent)",
-        }}
-      />
     </section>
   );
 }

@@ -28,7 +28,7 @@ export default async function AdminDrawsPage() {
         <div>
           <Link
             href="/admin"
-            className="inline-flex items-center gap-1.5 text-xs text-brand-ink-muted hover:text-brand-primary mb-2"
+            className="inline-flex items-center gap-1.5 text-xs text-brand-ink-muted hover:text-brand-signal mb-2"
           >
             <ArrowLeft size={14} strokeWidth={2} />
             Overview
@@ -37,7 +37,7 @@ export default async function AdminDrawsPage() {
           <p className="text-sm text-brand-ink-muted mt-1">
             {configured
               ? `${draws.length} draws · publish or edit winning numbers below.`
-              : "Winning-numbers editor — Supabase not configured yet."}
+              : "Winning-numbers editor, Supabase not configured yet."}
           </p>
         </div>
         <Link
@@ -66,7 +66,7 @@ export default async function AdminDrawsPage() {
         <div className="rounded-lg border border-brand-border bg-brand-paper p-10 text-center">
           <p className="text-brand-ink-muted">
             No draws yet. Add the first one with{" "}
-            <Link href="/admin/draws/new" className="text-brand-primary font-semibold">
+            <Link href="/admin/draws/new" className="text-brand-signal font-semibold">
               New draw
             </Link>
             .
@@ -118,7 +118,7 @@ export default async function AdminDrawsPage() {
                     <div className="inline-flex items-center gap-2">
                       <Link
                         href={`/admin/draws/${d.id}/edit`}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-semibold text-brand-primary hover:bg-brand-primary/10 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-semibold text-brand-signal hover:bg-brand-primary/10 transition-colors"
                       >
                         <Pencil size={12} strokeWidth={2} />
                         Edit

@@ -53,7 +53,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="ml-60">
         <header className="bg-brand-paper border-b border-brand-border px-8 py-4">
           <p className="text-sm text-brand-ink-muted">
-            Internal — single-admin role per super prompt §5
+            Internal, single-admin role per super prompt §5
           </p>
         </header>
         <main className="p-8">{children}</main>

@@ -85,9 +85,11 @@ export function LottoCluster({
     <svg
       viewBox="0 0 600 620"
       className={className}
-      style={style}
+      // overflow visible so balls that drift past the viewBox during the
+      // float/orbit animation are never clipped by the SVG's own bounds.
+      style={{ overflow: "visible", ...style }}
       role="img"
-      aria-label="A constellation of nine numbered lottery balls in vivid colours — a gold 90 at the centre surrounded by 7, 52, 23, 41, 14, 66, 38 and 79 — slowly orbiting on a dark field."
+      aria-label="A constellation of nine numbered lottery balls in vivid colours, a gold 90 at the centre surrounded by 7, 52, 23, 41, 14, 66, 38 and 79, slowly orbiting on a dark field."
     >
       <defs>
         <radialGradient id="ballGold" cx="35%" cy="28%" r="72%">
@@ -154,26 +156,41 @@ export function LottoCluster({
         </radialGradient>
       </defs>
 
-      {/* Sparkle field — slow twinkle */}
-      <g className="lc-spark" fill="#ffffff">
-        <circle cx="68" cy="92" r="5" opacity="0.5" />
-        <circle cx="98" cy="58" r="3" opacity="0.4" />
-        <circle cx="540" cy="80" r="4" opacity="0.5" />
-        <circle cx="40" cy="240" r="3" opacity="0.38" />
-        <circle cx="34" cy="430" r="4" opacity="0.46" />
-        <circle cx="72" cy="560" r="5" opacity="0.5" />
-        <circle cx="560" cy="220" r="3" opacity="0.4" />
-        <circle cx="540" cy="380" r="4" opacity="0.46" />
-        <circle cx="568" cy="500" r="5" opacity="0.5" />
-        <circle cx="220" cy="40" r="2" opacity="0.36" />
-        <circle cx="380" cy="32" r="3" opacity="0.46" />
-        <circle cx="280" cy="600" r="2" opacity="0.36" />
-        <circle cx="408" cy="588" r="3" opacity="0.4" />
+      {/* Sparkle field — slow twinkle (brand blue so it shows on white).
+          More circles, higher opacity for stronger presence. */}
+      <g className="lc-spark" fill="#3b9bff">
+        <circle cx="68" cy="92" r="6" opacity="0.85" />
+        <circle cx="98" cy="58" r="4" opacity="0.7" />
+        <circle cx="540" cy="80" r="5" opacity="0.85" />
+        <circle cx="40" cy="240" r="4" opacity="0.65" />
+        <circle cx="34" cy="430" r="5" opacity="0.8" />
+        <circle cx="72" cy="560" r="6" opacity="0.85" />
+        <circle cx="560" cy="220" r="4" opacity="0.7" />
+        <circle cx="540" cy="380" r="5" opacity="0.8" />
+        <circle cx="568" cy="500" r="6" opacity="0.85" />
+        <circle cx="220" cy="40" r="3" opacity="0.65" />
+        <circle cx="380" cy="32" r="4" opacity="0.78" />
+        <circle cx="280" cy="600" r="3" opacity="0.65" />
+        <circle cx="408" cy="588" r="4" opacity="0.7" />
+        {/* extra sparkles for a fuller field */}
+        <circle cx="150" cy="150" r="3" opacity="0.6" />
+        <circle cx="470" cy="120" r="3" opacity="0.62" />
+        <circle cx="20" cy="330" r="4" opacity="0.72" />
+        <circle cx="585" cy="300" r="4" opacity="0.72" />
+        <circle cx="120" cy="500" r="3" opacity="0.6" />
+        <circle cx="500" cy="560" r="3" opacity="0.62" />
+        <circle cx="320" cy="22" r="3" opacity="0.6" />
+        <circle cx="180" cy="610" r="4" opacity="0.66" />
+        <circle cx="55" cy="160" r="2.5" opacity="0.55" />
+        <circle cx="555" cy="150" r="2.5" opacity="0.55" />
+        <circle cx="48" cy="510" r="3" opacity="0.6" />
+        <circle cx="600" cy="430" r="3" opacity="0.62" />
       </g>
 
       {/* Connecting network — spokes from the centre + an outer ring. Sits
-          behind the balls and breathes in opacity. */}
-      <g className="lc-arcs" stroke="rgba(150,190,255,0.55)" strokeWidth={1.5} fill="none" strokeLinecap="round">
+          behind the balls and breathes in opacity. Solid brand blue so it
+          reads on the white hero. */}
+      <g className="lc-arcs" stroke="rgba(10,110,211,0.7)" strokeWidth={1.75} fill="none" strokeLinecap="round">
         {SATELLITES.map((s) => (
           <line key={`spoke-${s.num}`} x1={CORE.cx} y1={CORE.cy} x2={s.cx} y2={s.cy} />
         ))}
@@ -186,14 +203,14 @@ export function LottoCluster({
         className="lc-glint"
         x1={CORE.cx} y1={CORE.cy} x2={452} y2={168}
         pathLength={100} strokeDasharray="9 100"
-        stroke="#eaf4ff" strokeWidth={2.5} strokeLinecap="round"
+        stroke="#3b9bff" strokeWidth={2.5} strokeLinecap="round"
         opacity={0} style={GLINT_STYLE}
       />
       <line
         className="lc-glint"
         x1={CORE.cx} y1={CORE.cy} x2={148} y2={472}
         pathLength={100} strokeDasharray="9 100"
-        stroke="#eaf4ff" strokeWidth={2.5} strokeLinecap="round"
+        stroke="#3b9bff" strokeWidth={2.5} strokeLinecap="round"
         opacity={0} style={{ ...GLINT_STYLE, animationDelay: "2.75s" }}
       />
 

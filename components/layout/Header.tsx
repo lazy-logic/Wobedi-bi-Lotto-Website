@@ -29,21 +29,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LazyMotion, domAnimation, m } from "framer-motion";
-import { Menu, X, ShieldCheck } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import {
-  NLA_LICENCE_NUMBER,
-  NLA_REGISTER_URL,
-  NLA_REGISTERED_LABEL,
-} from "@/lib/regulatory";
 
-// Nav follows the site structure from the company brief:
-//   Home · About · Products (Games) · Media · Draw Results · How To ·
-//   Responsible Gaming · Support (Contact).
+// Primary nav. (Media dropped from the top bar — still reachable via the
+// footer.) Home · About · Products (Games) · Results · How To ·
+// Responsible Gaming · Support (Contact).
 const NAV = [
   { label: "About", href: "/about" },
   { label: "Products", href: "/games" },
-  { label: "Media", href: "/media" },
   { label: "Results", href: "/results" },
   { label: "How to", href: "/how-to-play" },
   { label: "Responsible", href: "/responsible-play" },
@@ -62,12 +56,24 @@ export function Header() {
 
   useEffect(() => setOpen(false), [pathname]);
 
-  // Transparent at the very top, frosted glass once the hero scrolls away.
+  // Transparent at the very top, solid brand bar the moment the user scrolls.
+  // Read from documentElement/body too (some browsers report 0 on window).
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      const y =
+        window.scrollY ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
+      setScrolled(y > 4);
+    };
     onScroll(); // honour a page that loads already scrolled (deep links, back-nav)
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   if (pathname?.startsWith("/admin")) return null;
@@ -76,15 +82,30 @@ export function Header() {
   // drawer is open (the drawer needs an opaque-ish surface behind it).
   const glass = scrolled || open;
 
+  // Text colour: white everywhere EXCEPT when the bar is transparent over the
+  // home page's WHITE hero — there it must be dark. Inner pages have a dark
+  // PageHeader band behind the transparent bar, so they stay white.
+  const onWhiteHero = pathname === "/" && !glass;
+
   return (
     <LazyMotion features={domAnimation}>
       <header
         className={cn(
-          "sticky top-0 z-40 transition-all duration-300 ease-out",
+          "sticky top-0 z-40 transition-colors duration-300 ease-out",
           glass
-            ? "bg-brand-paper-sunken/70 backdrop-blur-xl backdrop-saturate-150 border-b border-white/10 shadow-soft"
+            ? "backdrop-blur-md border-b border-white/10"
             : "bg-transparent border-b border-transparent",
         )}
+        style={
+          glass
+            ? {
+                // Scrolled: solid-ish BRAND navy (matches the #0D337D band),
+                // never the washed-out grey the old paper-sunken/blur produced.
+                background:
+                  "linear-gradient(180deg, rgba(13,51,125,0.96), rgba(10,39,95,0.96))",
+              }
+            : undefined
+        }
       >
         <div className="mx-auto max-w-[1240px] px-5 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-20 gap-6">
@@ -95,32 +116,39 @@ export function Header() {
             <Link
               href="/"
               className="flex items-center gap-2.5 shrink-0 group"
-              aria-label="Wobedi Bi Lotto — home"
+              aria-label="Wobedi Bi Lotto, home"
             >
-              <Image
-                src="/brand/wobedibi-logo.png"
-                alt=""
-                width={400}
-                height={400}
-                priority
-                /* Logo art is dark navy — invert to white so it reads on
-                   the dark "Blue Hour" header bar. */
-                className="w-auto h-9 md:h-10 brightness-0 invert"
-              />
+              {/* Logo shown AS-IS (original navy art, never recoloured). On
+                  the dark header it sits on a white chip so the navy roundel
+                  reads cleanly. */}
+              <span className="inline-flex items-center justify-center rounded-xl bg-white p-1.5 ring-1 ring-black/5">
+                <Image
+                  src="/brand/wobedibi-logo.png"
+                  alt="Wobedi Bi Lotto"
+                  width={257}
+                  height={257}
+                  priority
+                  className="h-11 w-11 md:h-12 md:w-12 object-contain"
+                />
+              </span>
               <span className="hidden sm:flex flex-col leading-none">
-                <span className="font-display font-extrabold text-base md:text-lg tracking-tight text-brand-ink">
+                <span
+                  className={cn(
+                    "font-display font-extrabold text-xl md:text-2xl tracking-tight transition-colors",
+                    onWhiteHero ? "text-[#0c1c30]" : "text-white",
+                  )}
+                >
                   Wobedi&nbsp;Bi
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-ink-muted mt-1">
-                  Lotto
+                <span className="text-xs md:text-sm font-bold uppercase tracking-[0.22em] text-brand-signal -mt-0.5">
+                  Lottery
                 </span>
               </span>
             </Link>
 
             {/* ───── Primary nav (desktop) ─────
-                Plain text links separated by tracking, with a tiny square
-                indicator beneath the active item. Framer Motion glides
-                the square between items. */}
+                Plain white text links; a thin white underline slides beneath
+                the active item (Framer Motion layoutId). */}
             <nav
               aria-label="Primary"
               className="hidden lg:flex items-center gap-7"
@@ -132,22 +160,25 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "relative py-2 text-sm font-semibold tracking-tight transition-colors duration-200",
+                      "relative py-2 text-[15px] font-semibold tracking-tight transition-colors duration-200",
                       active
-                        ? "text-brand-primary"
-                        : "text-brand-ink hover:text-brand-primary",
+                        ? onWhiteHero
+                          ? "text-brand-primary"
+                          : "text-white"
+                        : onWhiteHero
+                          ? "text-[#475569] hover:text-brand-primary"
+                          : "text-white/75 hover:text-white",
                     )}
                   >
                     {item.label}
                     {active && (
                       <m.span
-                        layoutId="nav-indicator"
-                        className="absolute left-1/2 -translate-x-1/2 -bottom-[3px] w-5 h-[2px] bg-brand-primary"
-                        transition={{
-                          type: "spring",
-                          stiffness: 380,
-                          damping: 32,
-                        }}
+                        layoutId="nav-underline"
+                        className={cn(
+                          "absolute left-0 right-0 -bottom-[3px] h-[2px] rounded-full",
+                          onWhiteHero ? "bg-brand-primary" : "bg-white",
+                        )}
+                        transition={{ type: "spring", stiffness: 380, damping: 32 }}
                       />
                     )}
                   </Link>
@@ -155,22 +186,20 @@ export function Header() {
               })}
             </nav>
 
-            {/* ───── Right side: NLA badge + mobile toggle ─────
-                Desktop: a small NLA verification chip rather than a generic
-                "Get started" CTA — the brand promise is trust, so we lead
-                with the licence credential. */}
+            {/* ───── Right side: Get started CTA + mobile toggle ───── */}
             <div className="flex items-center gap-3">
-              <a
-                href={NLA_REGISTER_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden md:inline-flex items-center gap-2 px-3 py-2 border border-brand-border hover:border-brand-primary hover:text-brand-primary text-xs font-bold uppercase tracking-wider text-brand-ink-muted transition-colors"
+              <Link
+                href="/how-to-play"
+                className={cn(
+                  "hidden md:inline-flex items-center gap-2 h-10 px-5 rounded-full text-sm font-bold transition-colors",
+                  onWhiteHero
+                    ? "bg-brand-primary text-white hover:bg-brand-primary-deep"
+                    : "bg-white text-brand-primary hover:bg-brand-signal hover:text-white",
+                )}
               >
-                <ShieldCheck size={14} strokeWidth={2.25} />
-                {NLA_LICENCE_NUMBER
-                  ? `NLA #${NLA_LICENCE_NUMBER}`
-                  : NLA_REGISTERED_LABEL}
-              </a>
+                Get started
+                <ArrowRight size={16} strokeWidth={2.5} />
+              </Link>
 
               {/* Mobile menu toggle */}
               <button
@@ -178,7 +207,10 @@ export function Header() {
                 aria-label={open ? "Close menu" : "Open menu"}
                 aria-expanded={open}
                 onClick={() => setOpen((v) => !v)}
-                className="lg:hidden inline-flex items-center justify-center w-12 h-12 -mr-2 text-brand-ink hover:text-brand-primary transition-colors"
+                className={cn(
+                  "lg:hidden inline-flex items-center justify-center w-12 h-12 -mr-2 transition-colors",
+                  onWhiteHero ? "text-[#0c1c30] hover:text-brand-primary" : "text-white hover:text-brand-signal",
+                )}
               >
                 {open ? <X size={22} strokeWidth={2} /> : <Menu size={22} strokeWidth={2} />}
               </button>
@@ -199,27 +231,21 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "py-3 text-base font-semibold border-b border-brand-border last:border-b-0 transition-colors",
-                      active
-                        ? "text-brand-primary"
-                        : "text-brand-ink hover:text-brand-primary",
+                      "py-3 text-base font-semibold border-b border-white/10 last:border-b-0 transition-colors",
+                      active ? "text-brand-signal" : "text-white hover:text-brand-signal",
                     )}
                   >
                     {item.label}
                   </Link>
                 );
               })}
-              <a
-                href={NLA_REGISTER_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-ink-muted hover:text-brand-primary"
+              <Link
+                href="/how-to-play"
+                className="mt-5 inline-flex items-center justify-center gap-2 h-12 rounded-full bg-white text-brand-primary text-sm font-bold hover:bg-brand-signal hover:text-white transition-colors"
               >
-                <ShieldCheck size={13} strokeWidth={2.25} />
-                {NLA_LICENCE_NUMBER
-                  ? `NLA licence #${NLA_LICENCE_NUMBER}`
-                  : `${NLA_REGISTERED_LABEL} →`}
-              </a>
+                Get started
+                <ArrowRight size={16} strokeWidth={2.5} />
+              </Link>
             </nav>
           </div>
         )}

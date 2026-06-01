@@ -37,13 +37,13 @@ export default async function AdminDashboardPage() {
           <Link
             key={t.href}
             href={t.href}
-            className="group rounded-lg border border-brand-border bg-brand-paper p-6 hover:shadow-soft hover:-translate-y-0.5 transition-all"
+            className="group rounded-lg border border-brand-border bg-brand-paper p-6 hover:border-brand-border-strong hover:-translate-y-0.5 transition-all"
           >
             <p className="text-xs font-semibold uppercase tracking-wider text-brand-ink-muted">
               {t.label}
             </p>
             <p className="font-display font-extrabold text-6xl tnum mt-2 text-brand-ink leading-none">{t.count}</p>
-            <p className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-brand-primary group-hover:gap-2.5 transition-all">
+            <p className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-brand-signal group-hover:gap-2.5 transition-all">
               {t.action}
               <ArrowRight size={14} strokeWidth={1.75} />
             </p>

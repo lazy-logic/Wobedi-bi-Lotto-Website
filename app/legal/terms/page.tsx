@@ -138,7 +138,7 @@ export default function TermsPage() {
       <PageHeader
         eyebrow="Legal"
         title="Terms of service."
-        subtitle="The terms that apply to your use of this website and to gameplay through Wobedi Bi Lotto's NLA-licensed services."
+        subtitle="The simple ground rules for using this site and playing through our NLA-licensed services."
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Legal" },

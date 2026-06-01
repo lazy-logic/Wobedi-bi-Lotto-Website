@@ -12,7 +12,7 @@ export default function GamesLoading() {
     <>
       <PageHeader
         eyebrow="Our games"
-        title="Every NLA-licensed game, in one place."
+        title="Pick your game, pick your day."
         subtitle="Loading the catalogue…"
       />
       <section className="section-light relative overflow-hidden py-12 md:py-16" aria-busy="true" aria-label="Loading games">

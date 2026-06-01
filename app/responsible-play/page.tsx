@@ -16,13 +16,13 @@ import { Container } from "@/components/layout/Container";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { LightSection } from "@/components/layout/LightSection";
 import {
-  Wallet,
+  Ticket,
+  CalendarCheck,
+  PiggyBank,
+  Scale,
+  Handshake,
+  LifeBuoy,
   Pause,
-  MessageCircle,
-  ShieldCheck,
-  Sparkles,
-  Users,
-  HeartHandshake,
   XCircle,
 } from "lucide-react";
 
@@ -34,32 +34,32 @@ export const metadata: Metadata = {
 
 const PRINCIPLES = [
   {
-    icon: Sparkles,
+    icon: Ticket,
     title: "Gaming for entertainment",
     body: "Play for fun, not as a source of income or a way to recover losses. Treat every ticket as a small piece of entertainment.",
   },
   {
-    icon: ShieldCheck,
+    icon: CalendarCheck,
     title: "Strictly 18 and over",
     body: "Participation is limited to persons 18 years and above. Our agents and writers verify age and refuse service to anyone underage.",
   },
   {
-    icon: Wallet,
+    icon: PiggyBank,
     title: "Self-control and spending limits",
     body: "Set personal limits, don't borrow money to play, play only with what you can afford to lose, and take regular breaks.",
   },
   {
-    icon: HeartHandshake,
+    icon: Scale,
     title: "Fair and transparent operations",
     body: "Every draw and transaction is conducted with fairness, honesty, and integrity, in line with NLA regulations.",
   },
   {
-    icon: Users,
+    icon: Handshake,
     title: "Employee and agent responsibility",
     body: "Our team promotes responsible play, treats every customer respectfully, and never encourages excessive gaming.",
   },
   {
-    icon: MessageCircle,
+    icon: LifeBuoy,
     title: "Support for problem gaming",
     body: "If play stops being fun, speak to family, a professional counsellor, or a support organisation. We'll point you to the right place.",
   },
@@ -84,8 +84,8 @@ export default function ResponsiblePlayPage() {
     <>
       <PageHeader
         eyebrow="Responsible play"
-        title="Play within your means."
-        subtitle="Wobedi Bi Lotto is committed to responsible gaming. Our six principles, the warning signs to watch for, and what to do if you need help."
+        title="Keep it fun, keep it in check."
+        subtitle="Lotto should stay a bit of fun. Here's how we promote healthy play, the signs to watch for, and where to get help."
       >
         <span className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-brand-danger/15 ring-1 ring-brand-danger/40 text-white text-sm font-bold">
           <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-brand-danger text-white text-xs font-extrabold shadow-soft">
@@ -106,7 +106,7 @@ export default function ResponsiblePlayPage() {
               Six responsible-gaming principles.
             </h2>
             <p className="mt-5 text-base md:text-lg text-brand-ink-muted leading-relaxed text-balance">
-              The principles below shape how we operate every day — at head
+              The principles below shape how we operate every day, at head
               office, at writer desks, and at every agent's POS terminal.
             </p>
           </div>
@@ -115,7 +115,7 @@ export default function ResponsiblePlayPage() {
             {PRINCIPLES.map((p) => (
               <article
                 key={p.title}
-                className="rounded-2xl border border-brand-border bg-brand-paper p-6 shadow-soft"
+                className="rounded-2xl border border-brand-border bg-brand-paper p-6"
               >
                 <p.icon
                   size={26}
@@ -146,8 +146,8 @@ export default function ResponsiblePlayPage() {
                 When play stops being fun.
               </h2>
               <p className="mt-5 text-base text-white/70 leading-relaxed">
-                If any of these patterns sound familiar — for yourself or for
-                someone close — please take a step back, take a break, and
+                If any of these patterns sound familiar, for yourself or for
+                someone close, please take a step back, take a break, and
                 reach out for support.
               </p>
             </div>
@@ -193,10 +193,10 @@ export default function ResponsiblePlayPage() {
               <p className="text-sm text-brand-ink-muted mt-2 leading-relaxed">
                 If you'd like to be excluded from play, contact the office at{" "}
                 <a
-                  href="mailto:info@wobedibilotto.com"
+                  href="mailto:info@wobedibi.com"
                   className="text-brand-primary font-medium hover:underline"
                 >
-                  info@wobedibilotto.com
+                  info@wobedibi.com
                 </a>{" "}
                 and we'll guide you through the process.
               </p>
@@ -241,7 +241,7 @@ export default function ResponsiblePlayPage() {
               Prohibited practices.
             </h2>
             <p className="mt-5 text-base text-brand-ink-muted leading-relaxed">
-              Wobedi Bi Lotto strictly prohibits the following — at every
+              Wobedi Bi Lotto strictly prohibits the following, at every
               level of our operation, with no exception:
             </p>
             <ul className="mt-6 space-y-3">
@@ -277,7 +277,7 @@ export default function ResponsiblePlayPage() {
               Wobedi Bi Lotto operates under the National Lotto Act 2006
               (Act 722). We continuously train staff and agents, run
               awareness campaigns, and publish educational materials so
-              responsible play is part of the daily routine — not an
+              responsible play is part of the daily routine, not an
               afterthought. This policy is reviewed periodically to stay
               aligned with regulatory requirements and industry best
               practice.

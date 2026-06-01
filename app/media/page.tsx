@@ -51,7 +51,7 @@ export default function MediaPage() {
       <PageHeader
         eyebrow="Media"
         title="Photo gallery, testimonials, achievements."
-        subtitle="A growing record of Wobedi Bi Lotto — the people, the places, and the milestones along the way."
+        subtitle="A growing record of Wobedi Bi Lotto, the people, the places, and the milestones along the way."
       />
 
       <LightSection className="py-16 md:py-20">

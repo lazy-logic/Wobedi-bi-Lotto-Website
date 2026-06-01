@@ -18,9 +18,13 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Electric accent — the one bright in the dark field ──────────── */
-  --color-brand-primary: #0a6ed3;       /* Celtic — links, CTAs, accents     */
-  --color-brand-primary-deep: #054e98;  /* Polynesian — hover/pressed        */
+  /* ── Brand primary — the real deep-royal WObedibi blue (#0D337D),
+   *    matching the logo roundel. This is the canonical brand colour and
+   *    leads the PageHeader band + key accents. The brighter electric
+   *    Celtic/sky blues live under --color-brand-signal-* for contrast,
+   *    live moments, and links that need to pop on dark surfaces. ─────── */
+  --color-brand-primary: #0d337d;       /* WObedibi royal — brand lead        */
+  --color-brand-primary-deep: #092556;  /* deeper royal — hover/pressed       */
   --color-brand-primary-soft: #0a2547;  /* deep accent tint surface          */
   --color-brand-secondary: #054e98;     /* alias (backwards-compat)          */
 
@@ -238,12 +242,14 @@
      when the gradient can't paint (unsupported background-clip, or Windows
      High Contrast where the gradient is stripped but the fill stays). */
   .gradient-ink {
-    color: var(--color-brand-signal);
+    /* Blue-family monochrome — deep royal brand blue into bright sky. Cohesive
+       with #0D337D; no clashing violet/gold. */
+    color: var(--color-brand-primary);
     background: linear-gradient(
-      135deg,
-      var(--color-brand-signal),
-      var(--color-brand-violet),
-      var(--color-brand-gold)
+      120deg,
+      #0d337d,
+      #1f5fc0,
+      #3b9bff
     );
     -webkit-background-clip: text;
     background-clip: text;

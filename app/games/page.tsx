@@ -40,8 +40,8 @@ export default async function GamesPage({
     <>
       <PageHeader
         eyebrow="Our games"
-        title="Every NLA-licensed game, in one place."
-        subtitle={`${allGames.length} draws across the week. Tap a game for rules, draw schedule, and recent winning numbers. Or visit an approved agent's POS terminal to play any of them.`}
+        title="Pick your game, pick your day."
+        subtitle={`${allGames.length} draws across the week. Tap any game for its schedule, how it works, and recent winning numbers.`}
       />
 
       <LightSection className="pt-6 md:pt-8 pb-12 md:pb-16">

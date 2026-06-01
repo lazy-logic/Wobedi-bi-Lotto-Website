@@ -68,14 +68,14 @@ function readForm(formData: FormData): DrawFormPayload | { error: string } {
 
   const numbers = parseNumberList(String(formData.get("numbers") ?? ""));
   if (!numbers || numbers.length === 0) {
-    return { error: "Enter the winning numbers — comma- or space-separated, between 1 and 90." };
+    return { error: "Enter the winning numbers, comma- or space-separated, between 1 and 90." };
   }
 
   const bonusNumbers = parseNumberList(String(formData.get("bonusNumbers") ?? ""), {
     allowEmpty: true,
   });
   if (bonusNumbers === null) {
-    return { error: "Bonus numbers must be 1–90, comma- or space-separated. Leave blank if there are none." };
+    return { error: "Bonus numbers must be 1 to 90, comma- or space-separated. Leave blank if there are none." };
   }
 
   const sourceRaw = String(formData.get("source") ?? "manual");

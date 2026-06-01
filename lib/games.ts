@@ -207,7 +207,7 @@ export const games: Game[] = [
     longDescription:
       "A partnership game launched with Veterans Administration Ghana. A portion of proceeds supports veteran welfare.",
     schedule: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"],
-    scheduleLabel: "Mon–Sat",
+    scheduleLabel: "Mon-Sat",
     drawTime: null,
     priceGhs: null,
     channel: "standard",
@@ -226,7 +226,7 @@ export const games: Game[] = [
     longDescription:
       "A midday-cadence game drawn Monday through Saturday — six chances around the lunchtime window.",
     schedule: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"],
-    scheduleLabel: "Mon–Sat",
+    scheduleLabel: "Mon-Sat",
     drawTime: null,
     priceGhs: null,
     channel: "standard",

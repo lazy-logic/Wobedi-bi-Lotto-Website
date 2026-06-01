@@ -23,9 +23,9 @@ const variantClasses = {
   primary:
     "bg-brand-primary text-white hover:bg-brand-primary-deep active:bg-brand-primary-deep",
   secondary:
-    "bg-brand-paper text-brand-primary border border-brand-primary hover:bg-brand-paper-muted",
+    "bg-brand-paper text-brand-signal border border-brand-primary hover:bg-brand-paper-muted",
   ghost:
-    "bg-transparent text-brand-primary hover:bg-brand-paper-muted",
+    "bg-transparent text-brand-signal hover:bg-brand-paper-muted",
 };
 
 const sizeClasses = {

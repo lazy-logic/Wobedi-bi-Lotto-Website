@@ -42,10 +42,8 @@ const COMPANY_LINKS = [
 
 const LEGAL_LINKS = [
   { label: "Responsible gaming", href: "/responsible-play" },
-  { label: "Licence & regulation", href: "/legal/license" },
   { label: "Terms", href: "/legal/terms" },
   { label: "Privacy", href: "/legal/privacy" },
-  { label: "Cookies", href: "/legal/cookies" },
 ];
 
 export function Footer() {
@@ -60,13 +58,17 @@ export function Footer() {
           {/* Brand block */}
           <div className="md:col-span-5 lg:col-span-4">
             <div className="flex items-center gap-2.5">
-              <Image
-                src="/brand/wobedibi-logo.png"
-                alt=""
-                width={400}
-                height={400}
-                className="w-auto h-10 brightness-0 invert"
-              />
+              {/* Logo shown AS-IS (original navy art) on a white chip so it
+                  reads on the dark footer without recolouring. */}
+              <span className="inline-flex items-center justify-center rounded-xl bg-white p-1.5 ring-1 ring-black/5">
+                <Image
+                  src="/brand/wobedibi-logo.png"
+                  alt="Wobedi Bi Lotto"
+                  width={257}
+                  height={257}
+                  className="h-9 w-9 object-contain"
+                />
+              </span>
               <span className="flex flex-col leading-none">
                 <span className="font-display font-extrabold text-lg tracking-tight">
                   Wobedi&nbsp;Bi
@@ -197,10 +199,10 @@ export function Footer() {
                   className="mt-0.5 text-white/60 flex-shrink-0"
                 />
                 <a
-                  href="mailto:info@wobedibilotto.com"
+                  href="mailto:info@wobedibi.com"
                   className="break-words hover:text-white"
                 >
-                  info@wobedibilotto.com
+                  info@wobedibi.com
                 </a>
               </li>
             </ul>
