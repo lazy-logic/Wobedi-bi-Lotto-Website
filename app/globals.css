@@ -479,13 +479,25 @@
   animation: curve-flow 24s linear infinite;
 }
 
-/* Wire-service ticker. */
+/* Wire-service ticker.
+   The loop scrolls the full (duplicated) content width regardless of viewport,
+   so on a narrow phone the same distance over 45s reads as a near-frozen crawl.
+   Scale the duration to the viewport: brisk on mobile, calmer on desktop. */
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 .marquee {
-  animation: marquee 45s linear infinite;
+  animation: marquee 22s linear infinite; /* mobile — brisk */
   will-change: transform;
 }
+@media (min-width: 640px) {
+  .marquee { animation-duration: 32s; }   /* tablet */
+}
+@media (min-width: 1024px) {
+  .marquee { animation-duration: 45s; }   /* desktop — calm */
+}
 .marquee:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee { animation: none; transform: none; }
+}
