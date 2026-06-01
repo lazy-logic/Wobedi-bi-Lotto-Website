@@ -5,7 +5,6 @@
  *   1. Page hero
  *   2. HowItWorks — the three-step pattern
  *   3. FAQ — common questions (the company brief lists FAQ under Support)
- *   4. TrustStrip
  *
  * The FAQ answers are kept deliberately non-specific on regulated details
  * (exact prize-claim windows, helplines) — those are owner/compliance copy.
@@ -17,7 +16,6 @@ import { Container } from "@/components/layout/Container";
 import { LightSection } from "@/components/layout/LightSection";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { HowItWorks } from "@/components/marketing/HowItWorks";
-import { TrustStrip } from "@/components/layout/TrustStrip";
 import { FaqAccordion, type FaqItem } from "@/components/FaqAccordion";
 import { jsonLd } from "@/lib/structured-data";
 
@@ -113,8 +111,6 @@ export default function HowToPlayPage() {
           </div>
         </Container>
       </LightSection>
-
-      <TrustStrip />
     </>
   );
 }

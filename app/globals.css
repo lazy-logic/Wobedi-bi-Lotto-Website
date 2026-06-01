@@ -39,6 +39,13 @@
   --color-brand-paper-muted: #00142e;   /* near-black sections, tables       */
   --color-brand-paper-sunken: #00060f;  /* deepest inset                     */
 
+  /* ── Deep-navy "rail" surfaces that must stay dark even inside a
+   *    .section-light scope (the contact rail, the results "Latest draw"
+   *    signal badge). Defined once here so they aren't hardcoded inline and
+   *    can't drift; deliberately NOT remapped in .section-light below. ─── */
+  --color-brand-rail: #06182f;          /* dark contact rail panel           */
+  --color-brand-signal-ink: #001226;    /* ink/dot on the bright signal pill */
+
   /* ── Ink — cool whites + blue-grey ──────────────────────────────── */
   --color-brand-ink: #e9f1fb;           /* primary text on dark              */
   --color-brand-ink-muted: #93a7c4;     /* secondary text / metadata         */

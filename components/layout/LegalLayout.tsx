@@ -30,7 +30,7 @@ export function LegalLayout({ lastUpdated, sections }: LegalLayoutProps) {
       <Container>
         <div className="grid gap-10 lg:gap-14 lg:grid-cols-12">
           {/* Body */}
-          <div className="lg:col-span-8 space-y-12">
+          <div className="order-2 lg:order-none lg:col-span-8 space-y-12">
             <p className="text-xs font-bold uppercase tracking-wider text-brand-ink-muted">
               Last updated · <span className="tnum">{lastUpdated}</span>
             </p>
@@ -49,10 +49,11 @@ export function LegalLayout({ lastUpdated, sections }: LegalLayoutProps) {
             ))}
           </div>
 
-          {/* Sticky TOC */}
-          <aside className="lg:col-span-4 lg:sticky lg:top-32 lg:self-start">
+          {/* Sticky TOC — ordered first on mobile so it's reachable without
+              scrolling past the full body; sticks beside the body on lg+. */}
+          <aside className="order-1 lg:order-none lg:col-span-4 lg:sticky lg:top-32 lg:self-start">
             <div className="rounded-2xl border border-brand-border bg-brand-paper-muted p-5">
-              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-ink-muted mb-4">
+              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-ink mb-4">
                 <ScrollText size={14} strokeWidth={2} />
                 On this page
               </p>
@@ -64,7 +65,7 @@ export function LegalLayout({ lastUpdated, sections }: LegalLayoutProps) {
                         href={`#${s.id}`}
                         className="flex items-baseline gap-3 text-brand-ink hover:text-brand-primary transition-colors"
                       >
-                        <span className="tnum text-xs text-brand-ink-muted w-5 flex-shrink-0">
+                        <span className="tnum text-xs text-brand-primary w-5 flex-shrink-0">
                           {String(i + 1).padStart(2, "0")}
                         </span>
                         <span>{s.title}</span>

@@ -26,7 +26,11 @@ type GameTileProps = {
 // "TBC" placeholder. Games without a fixed single day (VAG, Noon Rush) run the
 // full Monday–Saturday week, so they read "MON–SAT".
 function watermark(label: string): string {
-  if (label === "Schedule TBC" || label === "Mon-Sat") return "MON-SAT";
+  // Normalise (lower-case, any dash treated alike) so a label that arrives
+  // from Supabase as "MON–SAT" (en-dash) or "mon-sat" still resolves — exact
+  // string comparison would silently fall through to the slice path below.
+  const norm = label.trim().toLowerCase().replace(/[‐-―]/g, "-");
+  if (norm === "schedule tbc" || norm === "mon-sat") return "MON-SAT";
   // "Saturdays" to "SAT", "Wednesdays" to "WED", etc.
   return label.replace(/s$/i, "").slice(0, 3).toUpperCase();
 }

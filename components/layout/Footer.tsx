@@ -10,13 +10,12 @@
  * visitor the page ends — and gives the regulatory disclosures the
  * weight they need to be unmissable per docs/nla-compliance.md §2.
  *
- * Returns null inside /admin so the admin chrome owns its own layout.
+ * Pure server component: all markup is static, so nothing here hydrates on the
+ * client. The /admin path check that hides it lives in the tiny client wrapper
+ * FooterGate (imported by the root layout) so this whole tree stays server-only.
  */
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Mail, MapPin, Phone, ShieldCheck } from "lucide-react";
 import { Container } from "./Container";
 import {
@@ -47,16 +46,15 @@ const LEGAL_LINKS = [
 ];
 
 export function Footer() {
-  const pathname = usePathname();
-  if (pathname?.startsWith("/admin")) return null;
-
   return (
     <footer className="bg-brand-paper-sunken text-white border-t border-brand-border">
       <Container>
-        {/* ───── Top: brand block + three nav columns ───── */}
-        <div className="grid gap-10 md:gap-12 md:grid-cols-12 py-14 md:py-20">
-          {/* Brand block */}
-          <div className="md:col-span-5 lg:col-span-4">
+        {/* ───── Top: centred brand block, then a balanced 2-column nav grid
+            on mobile (left-aligned link lists read cleaner than a long centred
+            stack); the familiar 12-column row on md+. ───── */}
+        <div className="grid gap-10 md:gap-12 md:grid-cols-12 py-10 md:py-12">
+          {/* Brand block — centred on mobile, left-aligned on md+ */}
+          <div className="flex flex-col items-center text-center md:items-start md:text-left md:col-span-5 lg:col-span-4">
             <div className="flex items-center gap-2.5">
               {/* Logo shown AS-IS (original navy art) on a white chip so it
                   reads on the dark footer without recolouring. */}
@@ -64,12 +62,12 @@ export function Footer() {
                 <Image
                   src="/brand/wobedibi-logo.png"
                   alt="Wobedi Bi Lotto"
-                  width={257}
-                  height={257}
+                  width={36}
+                  height={36}
                   className="h-9 w-9 object-contain"
                 />
               </span>
-              <span className="flex flex-col leading-none">
+              <span className="flex flex-col leading-none text-left">
                 <span className="font-display font-extrabold text-lg tracking-tight">
                   Wobedi&nbsp;Bi
                 </span>
@@ -95,6 +93,9 @@ export function Footer() {
             </a>
           </div>
 
+          {/* Nav + contact — 2-column left-aligned grid on mobile, dissolves
+              (display:contents) into the parent 12-column row on md+. */}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-8 text-left md:contents">
           {/* Products column */}
           <nav
             aria-label="Products"
@@ -161,8 +162,9 @@ export function Footer() {
             </ul>
           </nav>
 
-          {/* Contact column */}
-          <div className="md:col-span-7 lg:col-span-2">
+          {/* Contact column — spans both mobile columns so the address line
+              isn't cramped; one column on md+. */}
+          <div className="col-span-2 md:col-span-7 lg:col-span-2">
             <h2 className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/50 mb-4">
               Contact
             </h2>
@@ -207,15 +209,17 @@ export function Footer() {
               </li>
             </ul>
           </div>
+          </div>
         </div>
 
-        {/* ───── Bottom strip: legal name + 18+ + Act 722 ───── */}
-        <div className="border-t border-white/15 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-xs text-white/65">
+        {/* ───── Bottom strip: legal name + 18+ + Act 722 ─────
+            Centred + stacked on mobile, spread on a single row on md+. */}
+        <div className="border-t border-white/15 py-4 flex flex-col items-center text-center gap-4 text-xs text-white/65 md:flex-row md:items-center md:justify-between md:text-left">
           <p>
             © {new Date().getFullYear()} Wobedi Bi Lotto · NLA-licensed
             <span className="hidden md:inline"> · Operating under National Lotto Act 2006 (Act 722)</span>
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
             <span className="inline-flex items-center gap-1.5 text-white/85">
               <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-brand-danger text-white text-[10px] font-bold">
                 18+

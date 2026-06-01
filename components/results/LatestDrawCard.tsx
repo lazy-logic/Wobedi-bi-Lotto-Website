@@ -18,8 +18,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { m } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CalendarClock } from "lucide-react";
 import { NumberRow } from "./NumberRow";
+import { WaveRibbon } from "@/components/ui/WaveRibbon";
 import type { Game } from "@/lib/games";
 import type { Draw } from "@/lib/results";
 import { formatDate, daysUntilNextDraw, cn } from "@/lib/utils";
@@ -58,11 +59,15 @@ export function LatestDrawCard({
         className,
       )}
     >
-      {/* Slim accent bar — the card's only colour identifier up top. */}
-      <span aria-hidden className="block h-1 w-full" style={{ background: accent }} />
+      {/* A small accent tab on the left edge — the card's colour identifier. */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute top-4 left-0 h-8 w-1.5 rounded-r-full"
+        style={{ background: accent }}
+      />
 
       {/* ── Header: logo + game name + schedule, left-aligned ────────── */}
-      <div className="flex items-center gap-3 px-6 pt-5 md:px-7">
+      <div className="relative flex items-center gap-3 px-6 pt-4 md:px-7">
         {game.logoUrl ? (
           <span className="flex h-11 w-11 shrink-0 items-center justify-center transition-transform duration-300 group-hover:scale-105">
             <Image
@@ -87,11 +92,11 @@ export function LatestDrawCard({
       </div>
 
       {/* ── Winning numbers — centred hero ───────────────────────────── */}
-      <div className="px-6 py-7 md:px-7 text-center">
+      <div className="px-6 py-5 md:px-7 text-center">
         <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-ink-muted">
           Winning numbers
         </span>
-        <div className="mt-3.5 flex justify-center">
+        <div className="mt-2.5 flex justify-center">
           <NumberRow
             numbers={draw.numbers}
             bonusNumbers={draw.bonusNumbers}
@@ -99,35 +104,45 @@ export function LatestDrawCard({
             animated={animated}
           />
         </div>
-        <p className="mt-3.5 text-[11px] font-medium text-brand-ink-muted tnum">
+        <p className="mt-2.5 text-[11px] font-medium text-brand-ink-muted tnum">
           Drawn {formatDate(draw.drawDate)} · #{draw.drawNumber}
         </p>
       </div>
 
-      {/* ── Footer bar — a soft tinted strip, clean split ────────────── */}
+      {/* ── Footer band — the SAME wave treatment as the PageHeader base:
+          a deep brand-blue band filled with the identical layered wave
+          ribbon. White text sits above. ─────────────────────────────── */}
       <div
-        className="mt-auto flex items-center justify-between border-t border-brand-border px-6 py-4 text-xs md:px-7"
-        style={{ backgroundColor: "color-mix(in srgb, var(--accent) 6%, white)" }}
+        className="relative mt-auto overflow-hidden px-6 py-4 text-xs md:px-7 text-white"
+        style={{
+          background: "linear-gradient(165deg, #114199 0%, #0d337d 55%, #0a2a66 100%)",
+        }}
       >
-        {daysToNext !== null ? (
-          <span className="font-medium text-brand-ink-muted">
-            Next in{" "}
-            <span className="font-bold text-brand-ink tnum">
-              {daysToNext} {daysToNext === 1 ? "day" : "days"}
+        {/* Exact PageHeader wave ribbon — fills the whole band (shared component). */}
+        <WaveRibbon className="pointer-events-none absolute inset-0 h-full w-full" />
+
+        <div className="relative z-10 flex items-center justify-between">
+          {daysToNext !== null ? (
+            <span className="inline-flex items-center gap-1.5 font-medium text-white/75">
+              <CalendarClock size={13} strokeWidth={2} className="text-[#9cc4ff]" />
+              Next in{" "}
+              <span className="font-bold text-white tnum">
+                {daysToNext} {daysToNext === 1 ? "day" : "days"}
+              </span>
             </span>
-          </span>
-        ) : (
-          <span className="text-brand-ink-muted">Schedule pending</span>
-        )}
-        {linkToArchive && (
-          <span
-            className="inline-flex items-center gap-1 font-bold transition-all group-hover:gap-2"
-            style={{ color: accent }}
-          >
-            Archive
-            <ArrowRight size={12} strokeWidth={2.5} />
-          </span>
-        )}
+          ) : (
+            <span className="inline-flex items-center gap-1.5 text-white/75">
+              <CalendarClock size={13} strokeWidth={2} className="text-white/75" />
+              Schedule pending
+            </span>
+          )}
+          {linkToArchive && (
+            <span className="inline-flex items-center gap-1 font-bold text-white transition-all group-hover:gap-2">
+              Archive
+              <ArrowRight size={12} strokeWidth={2.5} />
+            </span>
+          )}
+        </div>
       </div>
     </m.article>
   );

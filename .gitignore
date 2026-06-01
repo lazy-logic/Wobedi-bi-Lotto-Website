@@ -8,6 +8,10 @@ out
 next-env.d.ts
 .DS_Store
 
+# Captured build/run logs (artifacts, never source)
+*-output.log
+build-output.log
+
 # Private keys / SSH material — never commit
 *.pem
 *.key

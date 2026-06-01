@@ -40,6 +40,7 @@ export async function generateMetadata({
   return {
     title: `${game.name} results`,
     description: `Latest winning numbers and draw archive for ${game.name}.`,
+    alternates: { canonical: `/results/${slug}` },
   };
 }
 

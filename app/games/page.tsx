@@ -63,7 +63,7 @@ export default async function GamesPage({
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-ink-muted mb-6 tnum">
                 Showing {filtered.length} of {allGames.length} games
               </p>
-              <div className="grid gap-5 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="grid scroll-mt-36 md:scroll-mt-44 gap-5 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {filtered.map((g, i) => (
                   <GameTile key={g.slug} game={g} latestDraw={latestDraws[i]} />
                 ))}

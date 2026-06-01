@@ -15,7 +15,7 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Montserrat } from "next/font/google";
 import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { FooterGate } from "@/components/layout/FooterGate";
 import { PageTransitions } from "@/components/layout/PageTransitions";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import "./globals.css";
@@ -140,7 +140,7 @@ export default function RootLayout({
         <main id="main" className="flex-1">
           <PageTransitions>{children}</PageTransitions>
         </main>
-        <Footer />
+        <FooterGate />
         <ScrollToTop />
       </body>
     </html>

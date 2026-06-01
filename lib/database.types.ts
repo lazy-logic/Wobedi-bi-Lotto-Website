@@ -97,6 +97,19 @@ export type PostRow = {
   updated_at: string;
 };
 
+export type ContactMessageRow = {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  read: boolean;
+  ip: string | null;
+  user_agent: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -160,6 +173,17 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<PostRow>;
+        Relationships: [];
+      };
+      contact_messages: {
+        Row: ContactMessageRow;
+        Insert: Omit<ContactMessageRow, "id" | "read" | "created_at" | "updated_at"> & {
+          id?: string;
+          read?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<ContactMessageRow>;
         Relationships: [];
       };
     };

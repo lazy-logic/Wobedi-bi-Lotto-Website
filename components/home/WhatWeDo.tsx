@@ -10,56 +10,52 @@
  *   5. Promote responsible gaming practices within our communities.
  *   6. Use modern systems and technology to improve service delivery and customer experience.
  *
- * Visual: six tiles in a 3-column grid on lg+. Each tile carries a coloured
- * accent corner drawn from a mixed palette (blue · gold · teal · violet ·
- * celtic · coral) so the section reads as a generous, multi-coloured grid
- * rather than six uniform blue cards.
+ * Visual: six commitment cards. Mobile renders a scroll-snap carousel with
+ * pagination dots (CommitmentCarousel); md+ renders a calm 2/3-column grid.
+ * Every accent is drawn from the brand-blue family so the section reads as one
+ * cohesive blue identity, never a rainbow.
  */
 import { Container } from "@/components/layout/Container";
+import { CommitmentCarousel, type Commitment } from "./CommitmentCarousel";
 
-type Commitment = {
-  index: string;
-  title: string;
-  body: string;
-  accent: string; // CSS color literal, feeds the corner triangle + number
-};
-
+// Brand-blue family only — a tonal ladder from bright signal to deep royal, so
+// the six cards stay on-brand and read as variations of one identity.
 const COMMITMENTS: Commitment[] = [
   {
     index: "01",
     title: "Reliable lottery services",
     body: "Trusted NLA 5/90 draws delivered consistently to customers across Ghana.",
-    accent: "#3b9bff", // sky blue
+    accent: "#3b9bff", // brand signal — brightest
   },
   {
     index: "02",
     title: "Agents and writers",
     body: "We support and manage a growing network of lotto agents and writers.",
-    accent: "#f6b73c", // gold
+    accent: "#0a6ed3", // brand signal-deep
   },
   {
     index: "03",
     title: "Transparency and fairness",
     body: "Operations conducted openly in every transaction and every draw.",
-    accent: "#1fc9a8", // teal
+    accent: "#2563eb", // mid royal
   },
   {
     index: "04",
     title: "Excellent customer support",
     body: "Efficient communication channels and a team that answers when called.",
-    accent: "#8b6dff", // violet
+    accent: "#054e98", // brand secondary
   },
   {
     index: "05",
     title: "Responsible gaming",
     body: "Promoting healthy, age-verified play within every community we serve.",
-    accent: "#0a6ed3", // celtic
+    accent: "#0d337d", // brand primary — the royal lead
   },
   {
     index: "06",
     title: "Modern systems",
     body: "Technology that improves service delivery and customer experience.",
-    accent: "#ff7a59", // coral
+    accent: "#092556", // brand primary-deep — deepest
   },
 ];
 
@@ -90,52 +86,11 @@ export function WhatWeDo() {
             </p>
           </div>
 
-          {/* Commitment grid */}
-          <div className="grid gap-px bg-brand-border md:grid-cols-2 lg:grid-cols-3">
-            {COMMITMENTS.map((c) => (
-              <CommitmentTile key={c.index} {...c} />
-            ))}
-          </div>
+          {/* Commitment cards — carousel on mobile (with pagination dots),
+              2/3-column grid on md+. */}
+          <CommitmentCarousel commitments={COMMITMENTS} />
         </div>
       </Container>
     </section>
-  );
-}
-
-function CommitmentTile({ index, title, body, accent }: Commitment) {
-  return (
-    <div className="group relative bg-white p-7 md:p-9 overflow-hidden transition-colors duration-300 hover:bg-brand-paper-muted">
-      {/* Coloured corner triangle — the per-tile accent */}
-      <div
-        aria-hidden
-        className="absolute top-0 right-0 w-0 h-0 transition-all duration-300 group-hover:w-24 group-hover:h-24"
-        style={{
-          width: "16px",
-          height: "16px",
-          borderTop: `16px solid ${accent}`,
-          borderLeft: "16px solid transparent",
-        }}
-      />
-
-      {/* Underline that reveals on hover */}
-      <span
-        aria-hidden
-        className="absolute left-7 md:left-9 right-7 md:right-9 bottom-7 md:bottom-9 h-px scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"
-        style={{ background: accent }}
-      />
-
-      <span
-        className="font-display font-extrabold tnum text-base"
-        style={{ color: accent }}
-      >
-        {index}
-      </span>
-      <h3 className="mt-4 font-display font-extrabold text-xl md:text-2xl text-brand-ink leading-tight tracking-tight">
-        {title}
-      </h3>
-      <p className="mt-3 text-sm md:text-base text-brand-ink-muted leading-relaxed">
-        {body}
-      </p>
-    </div>
   );
 }

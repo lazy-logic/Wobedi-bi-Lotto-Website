@@ -8,10 +8,10 @@
  *   4. Two-panel band: the message form (light card) beside a dark "contact
  *      rail" with office details, compliance route, and NLA verification.
  *
- * The form is a static UI mock — its action POSTs to /api/contact, which does
- * not exist yet. Wire it to an email service (Resend, Postmark, Supabase Edge
- * Function) before launch. Fields use RHF-friendly names so swapping in
- * React Hook Form + Zod is a trivial follow-up.
+ * The form (components-local ContactForm) is fully wired: it calls the
+ * submitContactMessage server action (app/contact/actions.ts), which validates
+ * and inserts into the contact_messages Postgres table. Submissions land in the
+ * /admin/messages inbox. No email service or third-party form handler.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -22,11 +22,11 @@ import {
   Clock,
   ShieldCheck,
   ArrowUpRight,
-  Send,
 } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { LightSection } from "@/components/layout/LightSection";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { ContactForm } from "./ContactForm";
 import { NLA_REGISTER_URL } from "@/lib/regulatory";
 
 // Google Maps embed centred on Adansi-Asokwa via LAT/LNG coordinates (not a
@@ -42,14 +42,6 @@ export const metadata: Metadata = {
   description:
     "Reach the Wobedi Bi Lotto office, compliance team, or send a general enquiry. Address, phone, email, and a contact form.",
 };
-
-const SUBJECTS = [
-  { value: "general", label: "General enquiry" },
-  { value: "agent", label: "Agent application" },
-  { value: "winner", label: "Prize claim / winner" },
-  { value: "compliance", label: "Compliance / responsible play" },
-  { value: "press", label: "Press & partnerships" },
-];
 
 const QUICK = [
   {
@@ -75,9 +67,6 @@ const QUICK = [
   },
 ];
 
-const FIELD =
-  "w-full rounded-xl border border-brand-border-strong bg-white px-4 text-base text-brand-ink placeholder:text-brand-ink-muted/60 transition-colors focus:border-brand-primary focus:outline-none";
-
 export default function ContactPage() {
   return (
     <>
@@ -102,7 +91,7 @@ export default function ContactPage() {
           src={MAP_EMBED_SRC}
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          className="block w-full h-[150px] md:h-[220px]"
+          className="block w-full h-[180px] md:h-[260px]"
           allowFullScreen
         />
         {/* Transparent overlay — blocks panning/zoom and the embed's info &
@@ -136,96 +125,19 @@ export default function ContactPage() {
                   compliance matters, use the direct route on the right.
                 </p>
 
-                <form action="/api/contact" method="post" className="mt-8 space-y-5">
-                  <div className="grid gap-5 md:grid-cols-2">
-                    <label className="block">
-                      <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-brand-ink-muted">
-                        Your name
-                      </span>
-                      <input
-                        type="text"
-                        name="name"
-                        required
-                        autoComplete="name"
-                        placeholder="Kwame Mensah"
-                        className={`${FIELD} h-12`}
-                      />
-                    </label>
-                    <label className="block">
-                      <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-brand-ink-muted">
-                        Email
-                      </span>
-                      <input
-                        type="email"
-                        name="email"
-                        required
-                        autoComplete="email"
-                        placeholder="you@example.com"
-                        className={`${FIELD} h-12`}
-                      />
-                    </label>
-                  </div>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-brand-ink-muted">
-                      Subject
-                    </span>
-                    <select
-                      name="subject"
-                      required
-                      defaultValue="general"
-                      className={`${FIELD} h-12`}
-                    >
-                      {SUBJECTS.map((s) => (
-                        <option key={s.value} value={s.value}>
-                          {s.label}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-brand-ink-muted">
-                      Message
-                    </span>
-                    <textarea
-                      name="message"
-                      required
-                      rows={6}
-                      placeholder="How can we help?"
-                      className={`${FIELD} resize-none py-3`}
-                    />
-                  </label>
-
-                  <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <p className="text-xs text-brand-ink-muted">
-                      By submitting you agree to the{" "}
-                      <Link href="/legal/privacy" className="text-brand-primary hover:underline">
-                        Privacy Policy
-                      </Link>
-                      .
-                    </p>
-                    <button
-                      type="submit"
-                      className="group inline-flex items-center justify-center gap-2 h-12 px-7 rounded-full bg-brand-primary text-white font-semibold hover:bg-brand-primary-deep transition-colors"
-                    >
-                      Send message
-                      <Send
-                        size={16}
-                        strokeWidth={2.25}
-                        className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                      />
-                    </button>
-                  </div>
-                </form>
+                <div className="mt-8">
+                  <ContactForm />
+                </div>
               </div>
             </div>
 
-            {/* Contact rail — genuinely dark panel for contrast. Uses a
-                hardcoded dark surface (NOT a brand-paper token) so the
-                surrounding section-light scope can't wash it to pale blue. */}
+            {/* Contact rail — genuinely dark panel for contrast. Uses the
+                brand-rail token (NOT remapped by .section-light) so the
+                surrounding light scope can't wash it to pale blue. */}
             <aside className="lg:col-span-5">
               <div
-                className="relative h-full overflow-hidden rounded-3xl p-6 md:p-9 text-white"
-                style={{ backgroundColor: "#06182f", colorScheme: "dark" }}
+                className="relative h-full overflow-hidden rounded-3xl p-6 md:p-9 text-white bg-brand-rail"
+                style={{ colorScheme: "dark" }}
               >
                 <div className="flex items-center gap-2.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#3b9bff]" />

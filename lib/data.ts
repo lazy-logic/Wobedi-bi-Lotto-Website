@@ -24,7 +24,7 @@ import {
   type GameDay,
 } from "./games";
 import { draws as mockDraws, type Draw } from "./results";
-import type { GameRow, DrawRow, DrawSourceDb } from "./database.types";
+import type { GameRow, DrawRow, DrawSourceDb, ContactMessageRow } from "./database.types";
 
 // ---------------------------------------------------------------------------
 // Error helper.
@@ -374,4 +374,62 @@ export async function fetchGamesForAdmin(): Promise<{ id: string; slug: string; 
     return [];
   }
   return data as { id: string; slug: string; name: string }[];
+}
+
+// ---------------------------------------------------------------------------
+// Contact messages (admin inbox).
+//
+// Reads use the cookie-aware server client so the "authenticated can read
+// contact messages" RLS policy authorises them — only a signed-in admin can
+// list the inbox. The public form inserts via its own server action.
+// ---------------------------------------------------------------------------
+export type ContactMessage = {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  read: boolean;
+  createdAt: string;
+};
+
+function mapContactMessageRow(row: ContactMessageRow): ContactMessage {
+  return {
+    id: row.id,
+    name: row.name,
+    email: row.email,
+    subject: row.subject,
+    message: row.message,
+    read: row.read,
+    createdAt: row.created_at,
+  };
+}
+
+export async function fetchContactMessages(limit = 200): Promise<ContactMessage[]> {
+  if (!isSupabaseConfigured()) return [];
+  const supabase = createServerClient(await cookies());
+  const { data, error } = await supabase
+    .from("contact_messages")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  if (error || !data) {
+    reportSupabaseError("fetchContactMessages", error);
+    return [];
+  }
+  return (data as ContactMessageRow[]).map(mapContactMessageRow);
+}
+
+export async function countUnreadContactMessages(): Promise<number> {
+  if (!isSupabaseConfigured()) return 0;
+  const supabase = createServerClient(await cookies());
+  const { count, error } = await supabase
+    .from("contact_messages")
+    .select("*", { count: "exact", head: true })
+    .eq("read", false);
+  if (error) {
+    reportSupabaseError("countUnreadContactMessages", error);
+    return 0;
+  }
+  return count ?? 0;
 }

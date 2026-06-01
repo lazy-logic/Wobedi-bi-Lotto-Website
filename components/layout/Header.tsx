@@ -28,20 +28,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { LazyMotion, domAnimation, m } from "framer-motion";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Primary nav. (Media dropped from the top bar — still reachable via the
 // footer.) Home · About · Products (Games) · Results · How To ·
 // Responsible Gaming · Support (Contact).
 const NAV = [
+  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Products", href: "/games" },
+  { label: "Games", href: "/games" },
   { label: "Results", href: "/results" },
-  { label: "How to", href: "/how-to-play" },
-  { label: "Responsible", href: "/responsible-play" },
-  { label: "Support", href: "/contact" },
+  { label: "How to play", href: "/how-to-play" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const isActive = (pathname: string | null, href: string) => {
@@ -116,32 +116,31 @@ export function Header() {
             <Link
               href="/"
               className="flex items-center gap-2.5 shrink-0 group"
-              aria-label="Wobedi Bi Lotto, home"
+              aria-label="Wobedibi Lotto, home"
             >
               {/* Logo shown AS-IS (original navy art, never recoloured). On
                   the dark header it sits on a white chip so the navy roundel
                   reads cleanly. */}
-              <span className="inline-flex items-center justify-center rounded-xl bg-white p-1.5 ring-1 ring-black/5">
+              <span className="inline-flex items-center justify-center rounded-lg bg-white p-1 ring-1 ring-black/5">
                 <Image
                   src="/brand/wobedibi-logo.png"
-                  alt="Wobedi Bi Lotto"
-                  width={257}
-                  height={257}
-                  priority
-                  className="h-11 w-11 md:h-12 md:w-12 object-contain"
+                  alt="Wobedibi Lotto"
+                  width={36}
+                  height={36}
+                  className="h-8 w-8 md:h-9 md:w-9 object-contain"
                 />
               </span>
-              <span className="hidden sm:flex flex-col leading-none">
+              <span className="flex flex-col leading-none">
                 <span
                   className={cn(
-                    "font-display font-extrabold text-xl md:text-2xl tracking-tight transition-colors",
+                    "font-display font-extrabold text-base sm:text-lg md:text-xl tracking-tight transition-colors",
                     onWhiteHero ? "text-[#0c1c30]" : "text-white",
                   )}
                 >
-                  Wobedi&nbsp;Bi
+                  Wobedibi
                 </span>
-                <span className="text-xs md:text-sm font-bold uppercase tracking-[0.22em] text-brand-signal -mt-0.5">
-                  Lottery
+                <span className="text-[9px] sm:text-[10px] md:text-xs font-bold uppercase tracking-[0.22em] text-brand-signal -mt-0.5">
+                  Lotto
                 </span>
               </span>
             </Link>
@@ -201,55 +200,121 @@ export function Header() {
                 <ArrowRight size={16} strokeWidth={2.5} />
               </Link>
 
-              {/* Mobile menu toggle */}
+              {/* Mobile menu toggle — a bordered chip with three bars that
+                  morph into an X (the top + bottom bars rotate to cross, the
+                  middle fades) for a polished open/close transition. */}
               <button
                 type="button"
                 aria-label={open ? "Close menu" : "Open menu"}
                 aria-expanded={open}
                 onClick={() => setOpen((v) => !v)}
                 className={cn(
-                  "lg:hidden inline-flex items-center justify-center w-12 h-12 -mr-2 transition-colors",
-                  onWhiteHero ? "text-[#0c1c30] hover:text-brand-primary" : "text-white hover:text-brand-signal",
+                  "lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-xl border transition-colors",
+                  open
+                    ? "border-white/25 bg-white/10 text-white"
+                    : onWhiteHero
+                      ? "border-black/10 bg-white text-[#0c1c30] hover:border-brand-primary/40"
+                      : "border-white/20 text-white hover:bg-white/10",
                 )}
               >
-                {open ? <X size={22} strokeWidth={2} /> : <Menu size={22} strokeWidth={2} />}
+                <span className="relative block h-3.5 w-5" aria-hidden>
+                  <m.span
+                    className="absolute left-0 top-0 h-0.5 w-5 rounded-full bg-current"
+                    animate={open ? { rotate: 45, y: 6.5 } : { rotate: 0, y: 0 }}
+                    transition={{ duration: 0.25, ease: [0.3, 0, 0, 1] }}
+                  />
+                  <m.span
+                    className="absolute left-0 top-[6.5px] h-0.5 w-5 rounded-full bg-current"
+                    animate={open ? { opacity: 0, x: -6 } : { opacity: 1, x: 0 }}
+                    transition={{ duration: 0.2 }}
+                  />
+                  <m.span
+                    className="absolute left-0 bottom-0 h-0.5 w-5 rounded-full bg-current"
+                    animate={open ? { rotate: -45, y: -6.5 } : { rotate: 0, y: 0 }}
+                    transition={{ duration: 0.25, ease: [0.3, 0, 0, 1] }}
+                  />
+                </span>
               </button>
             </div>
           </div>
         </div>
 
         {/* ───── Mobile drawer ─────
-            Slides below the bar when open. Flat surface (no glass), the same
-            paper background as the bar itself. */}
-        {open && (
-          <div className="lg:hidden border-t border-white/10 bg-brand-paper-sunken/90 backdrop-blur-xl">
-            <nav aria-label="Mobile" className="px-5 py-5 flex flex-col">
-              {NAV.map((item) => {
-                const active = isActive(pathname, item.href);
-                return (
+            Reveals with a smooth height + fade; each link rises in a short
+            stagger. Brand-navy surface (matches the scrolled bar). A full-page
+            backdrop sits behind it so a tap outside closes the menu. */}
+        <AnimatePresence>
+          {open && (
+            <m.div
+              key="mobile-drawer"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.32, ease: [0.3, 0, 0, 1] }}
+              className="lg:hidden overflow-hidden border-t border-white/10"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(13,51,125,0.98), rgba(10,39,95,0.98))",
+              }}
+            >
+              <nav aria-label="Mobile" className="px-5 pt-3 pb-6 flex flex-col">
+                {NAV.map((item, i) => {
+                  const active = isActive(pathname, item.href);
+                  return (
+                    <m.div
+                      key={item.href}
+                      initial={{ opacity: 0, x: -12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.06 + i * 0.04, duration: 0.25, ease: "easeOut" }}
+                    >
+                      <Link
+                        href={item.href}
+                        className={cn(
+                          "block py-3.5 text-base font-semibold border-b border-white/10 transition-colors",
+                          active ? "text-brand-signal" : "text-white hover:text-brand-signal",
+                        )}
+                      >
+                        {item.label}
+                      </Link>
+                    </m.div>
+                  );
+                })}
+                <m.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.06 + NAV.length * 0.04, duration: 0.25, ease: "easeOut" }}
+                >
                   <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn(
-                      "py-3 text-base font-semibold border-b border-white/10 last:border-b-0 transition-colors",
-                      active ? "text-brand-signal" : "text-white hover:text-brand-signal",
-                    )}
+                    href="/how-to-play"
+                    className="mt-5 inline-flex w-full items-center justify-center gap-2 h-12 rounded-xl bg-white text-brand-primary text-sm font-bold hover:bg-brand-signal hover:text-white transition-colors"
                   >
-                    {item.label}
+                    Get started
+                    <ArrowRight size={16} strokeWidth={2.5} />
                   </Link>
-                );
-              })}
-              <Link
-                href="/how-to-play"
-                className="mt-5 inline-flex items-center justify-center gap-2 h-12 rounded-full bg-white text-brand-primary text-sm font-bold hover:bg-brand-signal hover:text-white transition-colors"
-              >
-                Get started
-                <ArrowRight size={16} strokeWidth={2.5} />
-              </Link>
-            </nav>
-          </div>
-        )}
+                </m.div>
+              </nav>
+            </m.div>
+          )}
+        </AnimatePresence>
       </header>
+
+      {/* Tap-outside backdrop — closes the drawer; fades with it. Below the
+          header (z-30 < header z-40) so the bar + drawer stay interactive. */}
+      <AnimatePresence>
+        {open && (
+          <m.button
+            type="button"
+            aria-label="Close menu"
+            tabIndex={-1}
+            onClick={() => setOpen(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="lg:hidden fixed inset-0 z-30 bg-black/40 backdrop-blur-[2px]"
+          />
+        )}
+      </AnimatePresence>
     </LazyMotion>
   );
 }

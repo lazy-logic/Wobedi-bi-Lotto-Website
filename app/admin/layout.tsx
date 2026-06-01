@@ -10,15 +10,19 @@
  * of the marketing site.
  */
 import Link from "next/link";
-import { LogOut, Newspaper, Trophy, Layers } from "lucide-react";
+import { LogOut, Newspaper, Trophy, Layers, Mail } from "lucide-react";
+import { countUnreadContactMessages } from "@/lib/data";
 
 const NAV = [
   { href: "/admin", label: "Overview", icon: Layers },
   { href: "/admin/draws", label: "Draws", icon: Trophy },
   { href: "/admin/posts", label: "Posts", icon: Newspaper },
+  { href: "/admin/messages", label: "Messages", icon: Mail },
 ];
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  const unread = await countUnreadContactMessages();
+
   return (
     <div className="min-h-screen bg-brand-paper-sunken">
       <aside className="fixed inset-y-0 left-0 w-60 bg-brand-ink text-white flex flex-col">
@@ -36,7 +40,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
             >
               <item.icon size={16} strokeWidth={1.75} />
-              {item.label}
+              <span className="flex-1">{item.label}</span>
+              {item.href === "/admin/messages" && unread > 0 && (
+                <span className="inline-flex min-w-5 items-center justify-center rounded-full bg-brand-signal px-1.5 py-0.5 text-[10px] font-bold text-white tnum">
+                  {unread}
+                </span>
+              )}
             </Link>
           ))}
         </nav>

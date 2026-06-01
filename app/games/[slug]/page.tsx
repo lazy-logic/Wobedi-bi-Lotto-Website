@@ -17,7 +17,6 @@ import { Container } from "@/components/layout/Container";
 import { LightSection } from "@/components/layout/LightSection";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Badge } from "@/components/ui/Badge";
-import { TrustStrip } from "@/components/layout/TrustStrip";
 import { NumberRow } from "@/components/results/NumberRow";
 import { GameLogo } from "@/components/games/GameLogo";
 import { games as mockGames } from "@/lib/games";
@@ -47,6 +46,7 @@ export async function generateMetadata({
   return {
     title: game.name,
     description: game.longDescription,
+    alternates: { canonical: `/games/${slug}` },
   };
 }
 
@@ -283,8 +283,6 @@ export default async function GameDetailPage({
           )}
         </Container>
       </LightSection>
-
-      <TrustStrip />
     </>
   );
 }

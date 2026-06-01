@@ -81,20 +81,23 @@ export async function Hero() {
           </span>
         </div>
 
-        {/* Two-column: text left, cluster right (cluster-first on mobile) */}
-        <div className="relative z-10 mt-10 md:mt-14 lg:mt-16 grid gap-10 md:gap-14 lg:gap-16 lg:grid-cols-12 items-center pb-16 md:pb-24">
+        {/* Two-column: text left, cluster right. On mobile the title leads
+            (order-1) and the cluster sits below it (order-2) — readable first,
+            decorative second; on lg+ they sit side by side. Text is top-aligned
+            on mobile (natural reading flow) and centred only once side-by-side. */}
+        <div className="relative z-10 mt-10 md:mt-14 lg:mt-16 grid gap-10 sm:gap-12 lg:gap-16 lg:grid-cols-12 items-start lg:items-center pb-16 md:pb-24">
           {/* Text column */}
-          <div className="lg:col-span-6 lg:order-1 order-2">
+          <div className="order-1 lg:col-span-6 lg:order-1">
             <h1
               className="fade-rise leading-[0.92] tracking-[-0.04em] text-balance"
               style={{ animationDelay: "0.15s" }}
             >
-              <span className="block text-brand-ink" style={{ fontSize: "clamp(2.2rem, 5vw, 4.4rem)", fontWeight: 700 }}>
+              <span className="block text-brand-ink" style={{ fontSize: "clamp(2.9rem, 8vw, 4.8rem)", fontWeight: 700 }}>
                 Your numbers,
               </span>
               <span
                 className="block mt-1.5 md:mt-2"
-                style={{ fontSize: "clamp(2.8rem, 5.6vw, 5.6rem)", fontWeight: 800, letterSpacing: "-0.03em" }}
+                style={{ fontSize: "clamp(3.5rem, 9.5vw, 6rem)", fontWeight: 800, letterSpacing: "-0.03em" }}
               >
                 <span className="text-brand-ink">drawn </span>
                 <span className="gradient-ink" style={{ paddingBottom: "0.06em" }}>live.</span>
@@ -110,22 +113,22 @@ export async function Hero() {
               drawn live under the National Lottery Authority, every single day.
             </p>
 
-            {/* CTAs — gradient primary pill + glass secondary pill */}
+            {/* CTAs — full-width stacked on mobile (thumb-friendly), inline row
+                from sm+. Gradient primary + white secondary. */}
             <div
-              className="fade-rise mt-8 md:mt-10 flex flex-wrap items-center gap-3"
+              className="fade-rise mt-8 md:mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center"
               style={{ animationDelay: "0.55s" }}
             >
               <Link
                 href="/results"
-                className="group inline-flex items-center gap-2 h-13 px-8 rounded-full text-white text-sm md:text-base font-bold uppercase tracking-wider hover:-translate-y-0.5 transition-all"
-                style={{ background: "linear-gradient(120deg, #0a6ed3, #3b9bff)" }}
+                className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 h-13 px-8 rounded-xl bg-brand-primary text-white text-sm md:text-base font-bold uppercase tracking-wider hover:bg-brand-primary-deep hover:-translate-y-0.5 transition-all"
               >
                 Draw results
                 <ArrowRight size={18} strokeWidth={2.25} className="transition-transform group-hover:translate-x-0.5" />
               </Link>
               <Link
                 href="/games"
-                className="inline-flex items-center gap-2 h-13 px-8 rounded-full border border-brand-border-strong bg-white text-brand-ink text-sm md:text-base font-bold uppercase tracking-wider hover:border-brand-primary hover:text-brand-primary hover:-translate-y-0.5 transition-all"
+                className="inline-flex w-full sm:w-auto items-center justify-center gap-2 h-13 px-8 rounded-xl border border-brand-border-strong bg-white text-brand-ink text-sm md:text-base font-bold uppercase tracking-wider hover:border-brand-primary hover:text-brand-primary hover:-translate-y-0.5 transition-all"
               >
                 Our games
               </Link>
@@ -133,7 +136,7 @@ export async function Hero() {
 
             {/* Trust row — small mono markers, electric live dot */}
             <div
-              className="fade-rise mt-8 md:mt-10 flex flex-wrap items-center gap-x-3 gap-y-2 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.16em] text-brand-ink-muted"
+              className="fade-rise mt-8 md:mt-10 flex flex-wrap items-center gap-x-2.5 gap-y-2 text-[11px] md:text-xs font-bold uppercase tracking-[0.16em] text-brand-ink-muted"
               style={{ animationDelay: "0.7s" }}
             >
               <span className="inline-flex items-center gap-1.5">
@@ -157,10 +160,10 @@ export async function Hero() {
 
           {/* Cluster column — standalone balls on the white hero (no panel).
               Soft tinted auras only, so the colourful balls read cleanly on
-              white without a dark backing. */}
-          <div className="lg:col-span-6 lg:order-2 order-1 flex justify-center">
+              white without a dark backing. Sits below the title on mobile. */}
+          <div className="order-2 lg:col-span-6 lg:order-2 flex justify-center">
             <div
-              className="fade-rise relative w-full max-w-[min(78vw,500px)] md:max-w-[600px] lg:w-[92%] lg:max-w-none xl:w-[96%] lg:-mt-8 xl:-mt-10"
+              className="fade-rise relative w-full max-w-[min(82vw,340px)] sm:max-w-[min(70vw,440px)] md:max-w-[520px] lg:w-[92%] lg:max-w-none xl:w-[96%] lg:-mt-8 xl:-mt-10"
               style={{ animationDelay: "0.25s" }}
             >
               {/* Soft brand-blue aura behind the balls — light, for depth on
@@ -192,7 +195,7 @@ export async function Hero() {
       <div className="relative z-10 border-y border-white/10 bg-[#06122b] text-brand-ink">
         <div className="flex items-stretch">
           {/* LIVE pill — fixed on the left, the marquee scrolls past it */}
-          <span className="z-10 flex flex-shrink-0 items-center gap-2 bg-brand-primary px-4 md:px-5 text-[11px] font-bold uppercase tracking-[0.2em] text-white">
+          <span className="z-10 flex flex-shrink-0 items-center gap-2 bg-brand-primary px-3 md:px-5 text-[11px] font-bold uppercase tracking-[0.2em] text-white">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full rounded-full bg-white opacity-70 animate-ping" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
@@ -210,7 +213,7 @@ export async function Hero() {
                 "linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent)",
             }}
           >
-            <div className="marquee flex items-center gap-10 whitespace-nowrap pl-6 text-sm">
+            <div className="marquee flex items-center gap-6 md:gap-10 whitespace-nowrap pl-6 text-sm">
               {marqueeLoop.length > 0 ? (
                 marqueeLoop.map((item, i) => (
                   <span key={i} className="inline-flex items-center gap-3">

@@ -38,11 +38,12 @@ const sizeClasses = {
 };
 
 const variantClasses = {
-  // Flat solid square tiles — no gradient, no glow.
-  primary: "text-white bg-brand-primary",
-  bonus: "text-white bg-brand-signal-deep",
-  // muted = a pale "blank" tile, so its label is dark for contrast.
-  muted: "text-[#0c1c30] bg-brand-paper-sunken",
+  // Outline-only square tiles — coloured border, transparent fill, coloured
+  // number. Clean and light on a white card.
+  primary: "text-brand-primary border-2 border-brand-primary bg-transparent",
+  bonus: "text-brand-signal-deep border-2 border-brand-signal-deep bg-transparent",
+  // muted = a "blank" tile with a neutral outline.
+  muted: "text-brand-ink-muted border-2 border-brand-border-strong bg-transparent",
 };
 
 export function NumberChip({

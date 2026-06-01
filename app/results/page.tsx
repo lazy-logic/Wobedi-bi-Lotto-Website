@@ -82,10 +82,10 @@ export default async function ResultsPage() {
                       className={isFreshest ? "relative rounded-2xl signal-pulse" : undefined}
                     >
                       {isFreshest && (
-                        <span className="absolute -top-2.5 left-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-brand-signal px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#001226] font-mono">
+                        <span className="absolute -top-2.5 left-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-brand-signal px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-brand-signal-ink font-mono">
                           <span className="relative flex h-1.5 w-1.5">
-                            <span className="absolute inline-flex h-full w-full rounded-full bg-[#001226] opacity-60 animate-ping" />
-                            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#001226]" />
+                            <span className="absolute inline-flex h-full w-full rounded-full bg-brand-signal-ink opacity-60 animate-ping" />
+                            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand-signal-ink" />
                           </span>
                           Latest draw
                         </span>
@@ -99,8 +99,7 @@ export default async function ResultsPage() {
               {/* Quiet footnote — source + per-game history pointer */}
               <div className="mt-10 flex flex-col gap-3 border-t border-brand-border pt-6 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-xs text-brand-ink-muted">
-                  Source: National Lottery Authority. In case of discrepancy,
-                  NLA's record is authoritative.
+                  Source: National Lottery Authority.
                 </p>
                 <Link
                   href="/games"

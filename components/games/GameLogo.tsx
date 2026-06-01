@@ -33,9 +33,41 @@ type Props = {
    * draw cards (logo there competes with the numbers and feels noisy).
    */
   showLogo?: boolean;
+  /**
+   * When true, renders ONLY the logo art (or monogram) with no white sphere,
+   * gradient, or shadow behind it — for surfaces where the ball backing is
+   * unwanted (e.g. the homepage GamesShowcase cards on the navy field). The
+   * `multiply` blend is dropped so the logo's own colours read true on dark.
+   */
+  bare?: boolean;
 };
 
-export function GameLogo({ game, className, size = 320, showLogo = true }: Props) {
+export function GameLogo({ game, className, size = 320, showLogo = true, bare = false }: Props) {
+  if (bare) {
+    return (
+      <div className={cn("relative aspect-square flex items-center justify-center", className)}>
+        {game.logoUrl ? (
+          <Image
+            src={game.logoUrl}
+            alt={`${game.name} logo`}
+            width={size}
+            height={size}
+            sizes="(max-width: 640px) 64px, (max-width: 1024px) 96px, 500px"
+            className="object-contain max-w-full max-h-full w-auto h-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.25)]"
+          />
+        ) : (
+          <span
+            aria-label={`${game.name} logo placeholder`}
+            className="font-display font-black text-white leading-none select-none uppercase tracking-tight"
+            style={{ fontSize: "clamp(2rem, 44%, 6rem)" }}
+          >
+            {game.name.charAt(0).toUpperCase()}
+          </span>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn("relative aspect-square rounded-full", className)}
@@ -85,6 +117,7 @@ export function GameLogo({ game, className, size = 320, showLogo = true }: Props
               alt={`${game.name} logo`}
               width={size}
               height={size}
+              sizes="(max-width: 640px) 64px, (max-width: 1024px) 96px, 500px"
               className="object-contain max-w-full max-h-full w-auto h-auto"
             />
           ) : (
